@@ -11,6 +11,9 @@ let currentMood   = null;
 let moodDebounce  = null;
 let flutterTimer  = null;
 
+const recentPhilosopherIds = [];
+const RECENT_WINDOW = 7; // won't repeat same philosopher within last 7 picks
+
 /* ---------- DOM refs ---------- */
 const questionInput        = document.getElementById('user-question');
 const charCount            = document.getElementById('char-count');
@@ -66,34 +69,30 @@ function updateSliderUI(value) {
 
 function updateBird(value) {
   if (!vibeBird) return;
-
-  // Horizontal position along the track
   vibeBird.style.left = value + '%';
-
-  // Determine mode
-  const mode = value < 34 ? 'serious' : value < 67 ? 'balanced' : 'kardasian';
-  const prev = vibeControl.dataset.mode;
-  vibeControl.dataset.mode = mode;
-
-  // Wing flutter only when entering or moving within kardasian zone
-  if (mode === 'kardasian') {
-    vibeControl.classList.add('is-moving');
-    clearTimeout(flutterTimer);
-    flutterTimer = setTimeout(() => vibeControl.classList.remove('is-moving'), 620);
-  } else if (prev === 'kardasian') {
-    // Clean up if leaving kardasian
-    vibeControl.classList.remove('is-moving');
-  }
 }
 
-function weightedRand(philosophers) {
-  const total = philosophers.reduce((sum, p) => sum + (p.weight ?? 1), 0);
+function weightedRand(pool) {
+  const total = pool.reduce((sum, p) => sum + (p.weight ?? 1), 0);
   let r = Math.random() * total;
-  for (const p of philosophers) {
+  for (const p of pool) {
     r -= (p.weight ?? 1);
     if (r <= 0) return p;
   }
-  return philosophers[philosophers.length - 1];
+  return pool[pool.length - 1];
+}
+
+function pickPhilosopher(allPhilosophers) {
+  // Exclude recently used philosophers; fall back to full pool if too few remain
+  const fresh = allPhilosophers.filter(p => !recentPhilosopherIds.includes(p.id));
+  const pool  = fresh.length >= 4 ? fresh : allPhilosophers;
+  const chosen = weightedRand(pool);
+
+  // Record the pick and trim the window
+  recentPhilosopherIds.push(chosen.id);
+  if (recentPhilosopherIds.length > RECENT_WINDOW) recentPhilosopherIds.shift();
+
+  return chosen;
 }
 
 function pick(excluding = null) {
@@ -106,8 +105,8 @@ function pick(excluding = null) {
   if (!pseudoList.length) pseudoList = quotes;
   const pseudo = rand(pseudoList);
 
-  // Pick philosopher using weighted selection
-  const philosopher = weightedRand(philosophers);
+  // Pick philosopher with recency filtering
+  const philosopher = pickPhilosopher(philosophers);
 
   // Pick excerpt from that philosopher
   const excerptObj = rand(philosopher.excerpts);
@@ -460,7 +459,6 @@ newThoughtBtn.addEventListener('click', () => {
 
   // Reset slider and bird
   vibeSlider.value = 50;
-  vibeControl.classList.remove('is-moving');
   updateSliderUI(50);
 
   // Reset mood

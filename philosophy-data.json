@@ -47,23 +47,44 @@
       ]
     },
     {
-      "id": "simone-de-beauvoir",
-      "name": "Simone de Beauvoir",
-      "era": "1908–1986",
-      "school": "Existentialism",
-      "weight": 1,
+      "id": "plato",
+      "name": "Plato",
+      "era": "428–348 BCE",
+      "school": "Classical Greek Philosophy",
+      "weight": 4,
       "excerpts": [
         {
-          "text": "Change your life today. Don't gamble on the future, act now, without delay.",
-          "source": "The Ethics of Ambiguity"
+          "text": "At the touch of love, everyone becomes a poet.",
+          "source": "Symposium"
         },
         {
-          "text": "In itself, homosexuality is as limiting as heterosexuality: the ideal should be to be capable of loving a woman or a man.",
-          "source": "Interview, 1984"
+          "text": "Thinking is the talking of the soul with itself.",
+          "source": "Theaetetus"
         },
         {
-          "text": "One is not born, but rather becomes, a woman.",
-          "source": "The Second Sex, Book II"
+          "text": "The price good men pay for indifference to public affairs is to be ruled by evil men.",
+          "source": "Republic (attributed)"
+        }
+      ]
+    },
+    {
+      "id": "aristotle",
+      "name": "Aristotle",
+      "era": "384–322 BCE",
+      "school": "Peripatetic Philosophy",
+      "weight": 4,
+      "excerpts": [
+        {
+          "text": "Man is by nature a political animal.",
+          "source": "Politics, Book I"
+        },
+        {
+          "text": "Happiness is the meaning and the purpose of life, the whole aim and end of human existence.",
+          "source": "Nicomachean Ethics"
+        },
+        {
+          "text": "It is the mark of an educated mind to be able to entertain a thought without accepting it.",
+          "source": "Nicomachean Ethics, Book I"
         }
       ]
     },
@@ -93,6 +114,27 @@
       ]
     },
     {
+      "id": "kant",
+      "name": "Immanuel Kant",
+      "era": "1724–1804",
+      "school": "German Idealism",
+      "weight": 4,
+      "excerpts": [
+        {
+          "text": "Act only according to that maxim by which you can at the same time will that it should become a universal law.",
+          "source": "Groundwork of the Metaphysics of Morals"
+        },
+        {
+          "text": "Two things fill the mind with ever new and increasing admiration and awe: the starry heavens above me and the moral law within me.",
+          "source": "Critique of Practical Reason"
+        },
+        {
+          "text": "Dare to know. Have the courage to use your own understanding.",
+          "source": "What Is Enlightenment?"
+        }
+      ]
+    },
+    {
       "id": "lao-tzu",
       "name": "Lao Tzu",
       "era": "6th–4th century BCE",
@@ -114,6 +156,27 @@
       ]
     },
     {
+      "id": "confucius",
+      "name": "Confucius",
+      "era": "551–479 BCE",
+      "school": "Confucianism",
+      "weight": 3,
+      "excerpts": [
+        {
+          "text": "It does not matter how slowly you go so long as you do not stop.",
+          "source": "Analects (attributed)"
+        },
+        {
+          "text": "When you know a thing, to hold that you know it; and when you do not know a thing, to allow that you do not know it — this is knowledge.",
+          "source": "Analects, Book II"
+        },
+        {
+          "text": "He who learns but does not think is lost. He who thinks but does not learn is in great danger.",
+          "source": "Analects, Book II"
+        }
+      ]
+    },
+    {
       "id": "seneca",
       "name": "Seneca",
       "era": "4 BCE – 65 CE",
@@ -131,6 +194,384 @@
         {
           "text": "Begin at once to live, and count each separate day as a separate life.",
           "source": "Letters from a Stoic, Letter I"
+        }
+      ]
+    },
+    {
+      "id": "epictetus",
+      "name": "Epictetus",
+      "era": "50–135 CE",
+      "school": "Stoicism",
+      "weight": 3,
+      "excerpts": [
+        {
+          "text": "It's not what happens to you, but how you react to it that matters.",
+          "source": "Enchiridion, Chapter 5"
+        },
+        {
+          "text": "Men are disturbed not by the things which happen, but by the opinions about the things.",
+          "source": "Enchiridion, Chapter 5"
+        },
+        {
+          "text": "First say to yourself what you would be; then do what you have to do.",
+          "source": "Discourses, Book III"
+        }
+      ]
+    },
+    {
+      "id": "epicurus",
+      "name": "Epicurus",
+      "era": "341–270 BCE",
+      "school": "Epicureanism",
+      "weight": 3,
+      "excerpts": [
+        {
+          "text": "Death does not concern us, because as long as we exist, death is not here. And when it does come, we no longer exist.",
+          "source": "Letter to Menoeceus"
+        },
+        {
+          "text": "Do not spoil what you have by desiring what you have not; remember that what you now have was once among the things you only hoped for.",
+          "source": "Vatican Sayings (attributed)"
+        },
+        {
+          "text": "Of all the things which wisdom provides to make us entirely happy, much the greatest is the possession of friendship.",
+          "source": "Principal Doctrines"
+        }
+      ]
+    },
+    {
+      "id": "schopenhauer",
+      "name": "Arthur Schopenhauer",
+      "era": "1788–1860",
+      "school": "Pessimism / Voluntarism",
+      "weight": 3,
+      "excerpts": [
+        {
+          "text": "Talent hits a target no one else can hit; genius hits a target no one else can see.",
+          "source": "The World as Will and Representation"
+        },
+        {
+          "text": "The two enemies of human happiness are pain and boredom.",
+          "source": "Essays and Aphorisms"
+        },
+        {
+          "text": "Compassion is the basis of morality.",
+          "source": "On the Basis of Morality"
+        }
+      ]
+    },
+    {
+      "id": "kierkegaard",
+      "name": "Søren Kierkegaard",
+      "era": "1813–1855",
+      "school": "Existentialism",
+      "weight": 3,
+      "excerpts": [
+        {
+          "text": "Life can only be understood backwards; but it must be lived forwards.",
+          "source": "Journals (1843)"
+        },
+        {
+          "text": "The most common form of despair is not being who you are.",
+          "source": "The Sickness Unto Death"
+        },
+        {
+          "text": "Anxiety is the dizziness of freedom.",
+          "source": "The Concept of Anxiety"
+        }
+      ]
+    },
+    {
+      "id": "camus",
+      "name": "Albert Camus",
+      "era": "1913–1960",
+      "school": "Absurdism",
+      "weight": 3,
+      "excerpts": [
+        {
+          "text": "In the midst of winter, I found there was, within me, an invincible summer.",
+          "source": "Return to Tipasa"
+        },
+        {
+          "text": "One must imagine Sisyphus happy.",
+          "source": "The Myth of Sisyphus"
+        },
+        {
+          "text": "The struggle itself toward the heights is enough to fill a man's heart.",
+          "source": "The Myth of Sisyphus"
+        }
+      ]
+    },
+    {
+      "id": "sartre",
+      "name": "Jean-Paul Sartre",
+      "era": "1905–1980",
+      "school": "Existentialism",
+      "weight": 3,
+      "excerpts": [
+        {
+          "text": "Existence precedes essence.",
+          "source": "Existentialism Is a Humanism"
+        },
+        {
+          "text": "Man is condemned to be free.",
+          "source": "Being and Nothingness"
+        },
+        {
+          "text": "Freedom is what you do with what's been done to you.",
+          "source": "Saint Genet (attributed)"
+        }
+      ]
+    },
+    {
+      "id": "hume",
+      "name": "David Hume",
+      "era": "1711–1776",
+      "school": "Empiricism / Skepticism",
+      "weight": 3,
+      "excerpts": [
+        {
+          "text": "Reason is, and ought only to be, the slave of the passions.",
+          "source": "A Treatise of Human Nature, Book II"
+        },
+        {
+          "text": "Beauty in things exists in the mind which contemplates them.",
+          "source": "Essays, Moral and Political"
+        },
+        {
+          "text": "Custom is the great guide of human life.",
+          "source": "An Enquiry Concerning Human Understanding"
+        }
+      ]
+    },
+    {
+      "id": "spinoza",
+      "name": "Baruch Spinoza",
+      "era": "1632–1677",
+      "school": "Rationalism",
+      "weight": 2,
+      "excerpts": [
+        {
+          "text": "All things excellent are as difficult as they are rare.",
+          "source": "Ethics, Part V"
+        },
+        {
+          "text": "I have made a ceaseless effort not to ridicule, not to bewail, not to scorn human actions, but to understand them.",
+          "source": "Political Treatise"
+        },
+        {
+          "text": "The highest activity a human being can attain is learning for understanding, because to understand is to be free.",
+          "source": "Ethics (attributed paraphrase)"
+        }
+      ]
+    },
+    {
+      "id": "hegel",
+      "name": "G.W.F. Hegel",
+      "era": "1770–1831",
+      "school": "German Idealism",
+      "weight": 2,
+      "excerpts": [
+        {
+          "text": "Nothing great in the world has been accomplished without passion.",
+          "source": "Lectures on the Philosophy of History"
+        },
+        {
+          "text": "The owl of Minerva spreads its wings only with the falling of the dusk.",
+          "source": "Philosophy of Right, Preface"
+        },
+        {
+          "text": "We learn from history that we do not learn from history.",
+          "source": "Lectures on the Philosophy of History (attributed)"
+        }
+      ]
+    },
+    {
+      "id": "descartes",
+      "name": "René Descartes",
+      "era": "1596–1650",
+      "school": "Rationalism",
+      "weight": 2,
+      "excerpts": [
+        {
+          "text": "I think, therefore I am.",
+          "source": "Discourse on the Method, Part IV"
+        },
+        {
+          "text": "It is not enough to have a good mind; the main thing is to use it well.",
+          "source": "Discourse on the Method, Part I"
+        },
+        {
+          "text": "Divide each difficulty into as many parts as is feasible and necessary to resolve it.",
+          "source": "Discourse on the Method, Part II"
+        }
+      ]
+    },
+    {
+      "id": "wittgenstein",
+      "name": "Ludwig Wittgenstein",
+      "era": "1889–1951",
+      "school": "Analytic Philosophy",
+      "weight": 2,
+      "excerpts": [
+        {
+          "text": "Whereof one cannot speak, thereof one must be silent.",
+          "source": "Tractatus Logico-Philosophicus, Proposition 7"
+        },
+        {
+          "text": "The limits of my language mean the limits of my world.",
+          "source": "Tractatus Logico-Philosophicus, 5.6"
+        },
+        {
+          "text": "If a lion could speak, we could not understand him.",
+          "source": "Philosophical Investigations, Part II"
+        }
+      ]
+    },
+    {
+      "id": "pascal",
+      "name": "Blaise Pascal",
+      "era": "1623–1662",
+      "school": "Christian Philosophy",
+      "weight": 2,
+      "excerpts": [
+        {
+          "text": "The heart has its reasons of which reason knows nothing.",
+          "source": "Pensées, No. 277"
+        },
+        {
+          "text": "All of humanity's problems stem from man's inability to sit quietly in a room alone.",
+          "source": "Pensées, No. 139"
+        },
+        {
+          "text": "Man is but a reed, the most feeble thing in nature; but he is a thinking reed.",
+          "source": "Pensées, No. 347"
+        }
+      ]
+    },
+    {
+      "id": "zhuangzi",
+      "name": "Zhuangzi",
+      "era": "4th century BCE",
+      "school": "Taoism",
+      "weight": 2,
+      "excerpts": [
+        {
+          "text": "Once upon a time, I dreamt I was a butterfly. Now I do not know whether I was then a man dreaming I was a butterfly, or whether I am now a butterfly dreaming I am a man.",
+          "source": "Zhuangzi, Chapter 2"
+        },
+        {
+          "text": "Flow with whatever may happen and let your mind be free.",
+          "source": "Zhuangzi, Chapter 4"
+        },
+        {
+          "text": "The fish trap exists because of the fish. Once you've gotten the fish, you can forget the trap.",
+          "source": "Zhuangzi, Chapter 26"
+        }
+      ]
+    },
+    {
+      "id": "marx",
+      "name": "Karl Marx",
+      "era": "1818–1883",
+      "school": "Dialectical Materialism",
+      "weight": 2,
+      "excerpts": [
+        {
+          "text": "Philosophers have hitherto only interpreted the world in various ways; the point is to change it.",
+          "source": "Theses on Feuerbach, XI"
+        },
+        {
+          "text": "The production of too many useful things results in too many useless people.",
+          "source": "Economic and Philosophic Manuscripts of 1844"
+        },
+        {
+          "text": "From each according to his ability, to each according to his needs.",
+          "source": "Critique of the Gotha Programme"
+        }
+      ]
+    },
+    {
+      "id": "heidegger",
+      "name": "Martin Heidegger",
+      "era": "1889–1976",
+      "school": "Phenomenology / Existentialism",
+      "weight": 2,
+      "excerpts": [
+        {
+          "text": "Language is the house of Being. In its home man dwells.",
+          "source": "Letter on Humanism"
+        },
+        {
+          "text": "Why are there beings at all instead of nothing?",
+          "source": "Introduction to Metaphysics"
+        },
+        {
+          "text": "Man acts as though he were the shaper and master of language, while in fact language remains the master of man.",
+          "source": "Poetry, Language, Thought"
+        }
+      ]
+    },
+    {
+      "id": "russell",
+      "name": "Bertrand Russell",
+      "era": "1872–1970",
+      "school": "Analytic Philosophy",
+      "weight": 2,
+      "excerpts": [
+        {
+          "text": "The good life is one inspired by love and guided by knowledge.",
+          "source": "What I Believe"
+        },
+        {
+          "text": "The whole problem with the world is that fools and fanatics are always so certain of themselves, and wiser people so full of doubts.",
+          "source": "attributed"
+        },
+        {
+          "text": "In all affairs it is a healthy thing now and then to hang a question mark on the things you have long taken for granted.",
+          "source": "Sceptical Essays (attributed)"
+        }
+      ]
+    },
+    {
+      "id": "aquinas",
+      "name": "Thomas Aquinas",
+      "era": "1225–1274",
+      "school": "Scholasticism",
+      "weight": 2,
+      "excerpts": [
+        {
+          "text": "The things that we love tell us what we are.",
+          "source": "Quodlibetal Questions (attributed)"
+        },
+        {
+          "text": "A small error in the beginning grows a thousandfold toward the end.",
+          "source": "On Being and Essence"
+        },
+        {
+          "text": "Love takes up where knowledge leaves off.",
+          "source": "Summa Theologica (attributed)"
+        }
+      ]
+    },
+    {
+      "id": "simone-de-beauvoir",
+      "name": "Simone de Beauvoir",
+      "era": "1908–1986",
+      "school": "Existentialism",
+      "weight": 2,
+      "excerpts": [
+        {
+          "text": "Change your life today. Don't gamble on the future, act now, without delay.",
+          "source": "The Ethics of Ambiguity"
+        },
+        {
+          "text": "One is not born, but rather becomes, a woman.",
+          "source": "The Second Sex, Book II"
+        },
+        {
+          "text": "I am incapable of conceiving infinity, and yet I do not accept finity.",
+          "source": "All Said and Done"
         }
       ]
     },
@@ -169,27 +610,6 @@
       ]
     },
     {
-      "id": "epictetus",
-      "name": "Epictetus",
-      "era": "50–135 CE",
-      "school": "Stoicism",
-      "weight": 3,
-      "excerpts": [
-        {
-          "text": "It's not what happens to you, but how you react to it that matters.",
-          "source": "Enchiridion, Chapter 5"
-        },
-        {
-          "text": "Men are disturbed not by the things which happen, but by the opinions about the things.",
-          "source": "Enchiridion, Chapter 5"
-        },
-        {
-          "text": "First say to yourself what you would be; then do what you have to do.",
-          "source": "Discourses, Book III"
-        }
-      ]
-    },
-    {
       "id": "simone-weil",
       "name": "Simone Weil",
       "era": "1909–1943",
@@ -203,6 +623,23 @@
         {
           "text": "The love of our neighbour in all its fullness simply means being able to say to him: What are you going through?",
           "source": "Waiting for God"
+        }
+      ]
+    },
+    {
+      "id": "foucault",
+      "name": "Michel Foucault",
+      "era": "1926–1984",
+      "school": "Post-Structuralism",
+      "weight": 1,
+      "excerpts": [
+        {
+          "text": "Where there is power, there is resistance.",
+          "source": "The History of Sexuality, Vol. 1"
+        },
+        {
+          "text": "Is it surprising that prisons resemble factories, schools, barracks, hospitals, which all resemble prisons?",
+          "source": "Discipline and Punish"
         }
       ]
     }
