@@ -234,25 +234,36 @@ function pick() {
 /* ---------- Emotion / mood detection ---------- */
 
 const EMOTION_KEYWORDS = {
-  calm:   ['calm', 'peace', 'peaceful', 'quiet', 'still', 'rest', 'breath', 'meditat', 'present',
-           'mindful', 'tranquil', 'serene', 'gentle', 'slow', 'relax', 'balance', 'harmony',
-           'content', 'patient', 'flow', 'ease', 'center', 'ground'],
-  stress: ['stress', 'anxious', 'anxiety', 'worried', 'worry', 'overwhelm', 'pressure', 'deadline',
-           'fear', 'afraid', 'panic', 'rush', 'hurry', 'chaos', 'difficult', 'struggle', 'lost',
-           'confus', 'urgent', 'busy', 'exhaust', 'stuck', 'too much', "can't", 'cannot', 'failing',
-           'angry', 'frustrat', 'tension'],
-  joy:    ['happy', 'happin', 'joy', 'joyful', 'love', 'celebrat', 'grateful', 'gratitude', 'excit',
-           'wonderful', 'beautiful', 'amazing', 'thankful', 'bless', 'delight', 'cheerful', 'hope',
-           'hopeful', 'inspir', 'alive', 'great', 'good', 'thrill', 'proud'],
-  sad:    ['sad', 'sadness', 'grief', 'griev', 'loss', 'lose', 'lonely', 'alone', 'miss', 'hurt',
-           'pain', 'heartbreak', 'tear', 'cry', 'depress', 'down', 'empty', 'hopeless', 'broken',
-           'regret', 'sorry', 'disappoint', 'mourn', 'ache', 'numb']
+  calm:      ['calm', 'peace', 'peaceful', 'quiet', 'still', 'rest', 'breath', 'meditat', 'present',
+              'mindful', 'tranquil', 'serene', 'gentle', 'slow', 'relax', 'balance', 'harmony',
+              'content', 'patient', 'flow', 'ease', 'center', 'ground', 'reflect', 'ponder',
+              'wonder', 'contempl', 'think', 'thought', 'notice', 'observe', 'accept'],
+  sad:       ['sad', 'sadness', 'grief', 'griev', 'loss', 'lose', 'lonely', 'alone', 'miss', 'hurt',
+              'pain', 'heartbreak', 'tear', 'cry', 'depress', 'down', 'empty', 'hopeless', 'broken',
+              'regret', 'sorry', 'disappoint', 'mourn', 'ache', 'numb', 'isolat', 'abandon',
+              'drift', 'hollow', 'longing', 'yearn'],
+  love:      ['love', 'loved', 'loving', 'adore', 'affection', 'romance', 'romantic', 'tender',
+              'cherish', 'devoted', 'devotion', 'intimacy', 'intimate', 'crush', 'infatuat',
+              'passion', 'warmth', 'together', 'partner', 'soulmate', 'heart', 'darling', 'caring',
+              'belong', 'connection', 'attach', 'bond', 'miss you', 'hold'],
+  joy:       ['happy', 'happin', 'joy', 'joyful', 'celebrat', 'grateful', 'gratitude', 'excit',
+              'wonderful', 'beautiful', 'amazing', 'thankful', 'bless', 'delight', 'cheerful',
+              'hopeful', 'inspir', 'alive', 'thrill', 'proud', 'laugh', 'smile', 'glow', 'elat',
+              'euphori', 'vibrant', 'energi', 'uplift'],
+  anger:     ['angry', 'anger', 'frustrat', 'furious', 'fury', 'rage', 'irritat', 'annoyed',
+              'annoy', 'resent', 'bitter', 'hostile', 'outrage', 'livid', 'mad', 'hate', 'hatred',
+              'unfair', 'injust', 'betray', 'disrespect', 'offend', 'insult', 'disgust', 'fed up',
+              'can\'t stand', 'sick of'],
+  confusion: ['confus', 'uncertain', 'unsure', 'unclear', 'lost', 'puzzle', 'doubt', 'question',
+              'don\'t know', 'not sure', 'maybe', 'wonder', 'undecided', 'overwhelm', 'stress',
+              'anxious', 'anxiety', 'worried', 'worry', 'fear', 'afraid', 'panic', 'stuck',
+              'exhaust', 'pressure', 'deadlin', 'chaos', 'spiral', 'numb', 'directionless'],
 };
 
 function detectEmotion(text) {
   if (!text || text.length < 3) return null;
   const lower = text.toLowerCase();
-  const scores = { calm: 0, stress: 0, joy: 0, sad: 0 };
+  const scores = { calm: 0, sad: 0, love: 0, joy: 0, anger: 0, confusion: 0 };
 
   for (const [emotion, keywords] of Object.entries(EMOTION_KEYWORDS)) {
     for (const kw of keywords) {
@@ -267,7 +278,9 @@ function detectEmotion(text) {
 
 function applyMood(emotion) {
   if (emotion === currentMood) return;
-  document.body.classList.remove('mood-calm', 'mood-stress', 'mood-joy', 'mood-sad');
+  document.body.classList.remove(
+    'mood-calm', 'mood-sad', 'mood-love', 'mood-joy', 'mood-anger', 'mood-confusion'
+  );
   if (emotion) document.body.classList.add(`mood-${emotion}`);
   currentMood = emotion;
 }

@@ -42,11 +42,13 @@ body {
   transition: background-color 1.8s ease;
 }
 
-/* Mood-shifted base tones */
-body.mood-calm   { background-color: #edf2e8; }
-body.mood-stress { background-color: #eaecf0; }
-body.mood-joy    { background-color: #f4ebe0; }
-body.mood-sad    { background-color: #e9edf2; }
+/* Mood-shifted base tones — soft, desaturated, one per emotion */
+body.mood-calm      { background-color: #edf2e8; } /* sage green   — neutral / reflective  */
+body.mood-sad       { background-color: #e6ecf4; } /* soft blue    — sadness / grief        */
+body.mood-love      { background-color: #f5e8ef; } /* soft pink    — love / affection       */
+body.mood-joy       { background-color: #f5f0dc; } /* warm yellow  — happiness / gratitude  */
+body.mood-anger     { background-color: #f5ebe8; } /* muted coral  — anger / frustration    */
+body.mood-confusion { background-color: #edeaf5; } /* soft lavender — confusion / anxiety   */
 
 /* ---------- Background layers ---------- */
 .bg-layer {
