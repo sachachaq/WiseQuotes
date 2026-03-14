@@ -713,3 +713,15 @@ shareTextBtn.addEventListener('click', handleShareText);
 
 // Pre-load data silently so first ask is faster
 loadData().catch(() => {});
+
+// Mobile placeholder: break onto two lines and center
+const PLACEHOLDER_DESKTOP = 'Share a teeny tiny thought. Big ones overwhelm me.';
+const PLACEHOLDER_MOBILE  = 'Share a teeny tiny thought.\nBig ones overwhelm me.';
+
+function syncPlaceholder() {
+  questionInput.placeholder = window.innerWidth <= 480
+    ? PLACEHOLDER_MOBILE
+    : PLACEHOLDER_DESKTOP;
+}
+syncPlaceholder();
+window.addEventListener('resize', syncPlaceholder);

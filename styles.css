@@ -824,4 +824,7 @@ body.mood-joy .bg-nature::before {
 
   /* Extra breathing room between subtitle and tagline block */
   .tagline-block { margin-top: 1.25rem; }
+
+  /* Center placeholder text on mobile (two-line version set via JS) */
+  .question-input { text-align: center; }
 }
