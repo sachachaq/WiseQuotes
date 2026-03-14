@@ -281,8 +281,18 @@ body.mood-joy .bg-nature::before {
   line-height: 1.1;
 }
 
+.site-subtitle {
+  margin-top: 1rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--ink-soft);
+  letter-spacing: .04em;
+}
+
 .site-tagline {
-  margin-top: .8rem;
+  margin-top: 1.4rem;
   font-size: .82rem;
   letter-spacing: .2em;
   text-transform: uppercase;
@@ -348,8 +358,8 @@ body.mood-joy .bg-nature::before {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding-top: 2.8rem;   /* room for the bird above the track */
-  padding-bottom: .6rem;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
 }
 
 .vibe-label {
@@ -399,101 +409,21 @@ body.mood-joy .bg-nature::before {
 /* hide the old thumb label — bird is the indicator now */
 .slider-thumb-label { display: none; }
 
-/* ── Bird marker ─────────────────────────────────────── */
+/* ── Bird thumb ──────────────────────────────────────── */
 
 .vibe-bird {
   position: absolute;
   top: 50%;
-  left: 50%;                      /* overridden by JS */
-  width: 50px;
-  height: 40px;
-  transform: translate(-50%, -69%); /* feet rest on track line */
+  left: 50%;             /* overridden by JS */
+  width: 36px;
+  height: 14px;
+  transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 4;
-  transition:
-    left 300ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
-    filter 300ms ease;
-  filter: drop-shadow(0 4px 8px rgba(100, 84, 56, 0.10));
+  transition: left 280ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.bird-svg { overflow: visible; width: 100%; height: 100%; }
-
-/* shared stroke properties */
-.bd-body, .bd-head,
-.bd-tail, .bd-beak, .bd-feet, .bd-wing {
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: stroke 320ms ease, fill 320ms ease, transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.bd-body { fill: rgba(188, 172, 130, 0.12); stroke: #8c7d60; stroke-width: 1.55; }
-.bd-head { fill: rgba(188, 172, 130, 0.10); stroke: #8c7d60; stroke-width: 1.55; }
-.bd-tail { fill: none; stroke: #8c7d60; stroke-width: 1.45; }
-.bd-beak { fill: none; stroke: #8c7d60; stroke-width: 1.35; }
-.bd-feet { fill: none; stroke: #8c7d60; stroke-width: 1.3; }
-.bd-eye  { fill: #8c7d60; transition: fill 320ms ease; }
-
-.bd-wing {
-  fill: none;
-  stroke: #8c7d60;
-  stroke-width: 1.5;
-  transform-box: fill-box;
-  transform-origin: 0% 100%;  /* pivot at wing root (left/bottom of path) */
-  transition: stroke 320ms ease, transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* ── Mode: serious — bird at rest, wing drooped ── */
-.vibe-control[data-mode="serious"] .vibe-bird {
-  filter: drop-shadow(0 3px 6px rgba(100, 84, 56, 0.07));
-}
-.vibe-control[data-mode="serious"] .bd-body,
-.vibe-control[data-mode="serious"] .bd-head {
-  stroke: #8a7b62; fill: rgba(183, 175, 152, 0.09);
-}
-.vibe-control[data-mode="serious"] .bd-tail,
-.vibe-control[data-mode="serious"] .bd-beak,
-.vibe-control[data-mode="serious"] .bd-feet { stroke: #8a7b62; }
-.vibe-control[data-mode="serious"] .bd-eye  { fill: #8a7b62; }
-.vibe-control[data-mode="serious"] .bd-wing {
-  stroke: #8a7b62;
-  transform: rotate(12deg);  /* wing down — resting */
-}
-
-/* ── Mode: balanced — alert, neutral posture ── */
-.vibe-control[data-mode="balanced"] .bd-wing {
-  transform: rotate(0deg);  /* neutral arc */
-}
-
-/* ── Mode: kardasian — wing raised, warmer tones ── */
-.vibe-control[data-mode="kardasian"] .vibe-bird {
-  transform: translate(-50%, -74%);  /* bird lifts slightly */
-  filter: drop-shadow(0 6px 12px rgba(168, 140, 80, 0.16));
-}
-.vibe-control[data-mode="kardasian"] .bd-body,
-.vibe-control[data-mode="kardasian"] .bd-head {
-  stroke: #a08850; fill: rgba(205, 185, 132, 0.18);
-}
-.vibe-control[data-mode="kardasian"] .bd-tail,
-.vibe-control[data-mode="kardasian"] .bd-beak,
-.vibe-control[data-mode="kardasian"] .bd-feet { stroke: #a08850; }
-.vibe-control[data-mode="kardasian"] .bd-eye  { fill: #a08850; }
-.vibe-control[data-mode="kardasian"] .bd-wing {
-  stroke: #a08850;
-  transform: rotate(-22deg);  /* wing raised — energetic */
-}
-
-/* Wing flutter — only in kardasian + actively moving */
-.vibe-control[data-mode="kardasian"].is-moving .bd-wing {
-  animation: wing-flutter 260ms cubic-bezier(0.22, 1, 0.36, 1) 2;
-}
-
-@keyframes wing-flutter {
-  0%   { transform: rotate(-22deg); }
-  28%  { transform: rotate(-35deg); }
-  62%  { transform: rotate(-12deg); }
-  100% { transform: rotate(-22deg); }
-}
+.bird-svg { width: 100%; height: 100%; overflow: visible; }
 
 /* ---------- Ask row ---------- */
 .ask-row {
@@ -571,32 +501,6 @@ body.mood-joy .bg-nature::before {
 .ask-btn.loading {
   pointer-events: none;
   opacity: 0.65;
-}
-
-/* ---------- New thought button ---------- */
-.new-thought-btn {
-  background: transparent;
-  border: none;
-  padding: .4rem .2rem;
-  font-family: 'Inter', sans-serif;
-  font-size: .72rem;
-  font-weight: 300;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  cursor: pointer;
-  opacity: 0.6;
-  transition: opacity var(--transition), color var(--transition);
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  text-underline-offset: 3px;
-  transition: opacity var(--transition), text-decoration-color var(--transition);
-}
-
-.new-thought-btn:hover {
-  opacity: 1;
-  color: var(--sage);
-  text-decoration-color: var(--sage);
 }
 
 /* ---------- Response section ---------- */
@@ -764,249 +668,6 @@ body.mood-joy .bg-nature::before {
 
 .philosopher-source.visible { opacity: 0.65; }
 
-/* Response actions */
-.response-actions {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1.75rem;
-  flex-wrap: wrap;
-}
-
-.another-btn,
-.share-toggle-btn {
-  background: transparent;
-  border-radius: 2rem;
-  padding: .55rem 1.5rem;
-  font-family: 'Inter', sans-serif;
-  font-size: .76rem;
-  font-weight: 300;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition), box-shadow var(--transition);
-}
-
-.another-btn {
-  border: 1px solid rgba(120, 137, 111, 0.3);
-  color: var(--sage);
-}
-
-.another-btn:hover {
-  background: rgba(120, 137, 111, 0.07);
-  border-color: var(--sage);
-  transform: translateY(-1px);
-}
-
-.share-toggle-btn {
-  border: 1px solid rgba(176, 138, 72, 0.3);
-  color: var(--gold);
-}
-
-.share-toggle-btn:hover {
-  background: rgba(176, 138, 72, 0.06);
-  border-color: var(--gold);
-  box-shadow: 0 3px 14px var(--gold-glow);
-  transform: translateY(-1px);
-}
-
-/* ---------- Share card ---------- */
-.share-card-wrapper {
-  width: 100%;
-  animation: fade-up .5s ease forwards;
-}
-
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.share-card {
-  width: 100%;
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: linear-gradient(148deg, #faf5ec 0%, #f2ebe0 55%, #ede4d6 100%);
-  border: 1px solid rgba(168, 152, 128, 0.28);
-  box-shadow: 0 6px 32px rgba(80, 60, 40, 0.12);
-  position: relative;
-}
-
-.share-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 55% 35% at 85% 15%, rgba(184, 151, 90, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 45% 28% at 15% 85%, rgba(120, 137, 111, 0.08) 0%, transparent 60%);
-  pointer-events: none;
-}
-
-.share-card-inner {
-  padding: 2.5rem 2.5rem 2rem;
-  position: relative;
-  z-index: 1;
-}
-
-.share-card-logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: .75rem;
-  letter-spacing: .32em;
-  text-transform: uppercase;
-  color: var(--gold);
-  opacity: 0.6;
-  margin-bottom: 1.5rem;
-}
-
-.share-question-block { margin-bottom: 1rem; }
-
-.share-question-text {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: .95rem;
-  font-style: italic;
-  color: var(--ink-soft);
-  opacity: 0.8;
-}
-
-.share-pseudo-quote {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
-  font-style: italic;
-  font-weight: 300;
-  color: var(--ink);
-  line-height: 1.6;
-  margin-bottom: 1.25rem;
-}
-
-.share-pseudo-quote::before { content: '"'; color: var(--stone-light); margin-right: .1em; }
-.share-pseudo-quote::after  { content: '"'; color: var(--stone-light); margin-left: .1em; }
-
-.share-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(168, 152, 128, 0.3), transparent);
-  margin: 1rem 0;
-}
-
-.share-philosopher-excerpt {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: .9rem;
-  font-style: italic;
-  color: var(--ink-soft);
-  opacity: 0.8;
-  line-height: 1.75;
-  margin-bottom: .5rem;
-}
-
-.share-meta { display: flex; flex-direction: column; gap: .1rem; }
-
-.share-philosopher-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: .88rem;
-  font-weight: 600;
-  color: var(--gold);
-  letter-spacing: .08em;
-}
-
-.share-philosopher-source {
-  font-size: .68rem;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  opacity: 0.65;
-}
-
-/* Share options bar */
-.share-options {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.share-option-toggle {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  font-size: .72rem;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  cursor: pointer;
-  user-select: none;
-}
-
-.share-option-toggle input[type="checkbox"] {
-  position: absolute;
-  opacity: 0;
-  width: 0; height: 0;
-}
-
-.toggle-track {
-  display: inline-block;
-  width: 2.4rem;
-  height: 1.25rem;
-  background: rgba(120, 100, 80, 0.1);
-  border: 1px solid rgba(120, 100, 80, 0.2);
-  border-radius: 1rem;
-  position: relative;
-  transition: background var(--transition), border-color var(--transition);
-  flex-shrink: 0;
-}
-
-.toggle-track::after {
-  content: '';
-  position: absolute;
-  top: .15rem; left: .15rem;
-  width: .9rem; height: .9rem;
-  background: var(--stone-light);
-  border-radius: 50%;
-  transition: transform var(--transition), background var(--transition);
-}
-
-.share-option-toggle input:checked + .toggle-track {
-  background: rgba(176, 138, 72, 0.14);
-  border-color: rgba(176, 138, 72, 0.4);
-}
-
-.share-option-toggle input:checked + .toggle-track::after {
-  transform: translateX(1.15rem);
-  background: var(--gold);
-}
-
-.share-buttons { display: flex; gap: .75rem; }
-
-.share-btn {
-  background: transparent;
-  border-radius: 2rem;
-  padding: .48rem 1.15rem;
-  font-size: .7rem;
-  font-weight: 400;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background var(--transition), transform var(--transition);
-}
-
-.share-copy {
-  border: 1px solid rgba(120, 100, 80, 0.25);
-  color: var(--ink-soft);
-}
-
-.share-copy:hover { background: rgba(120, 100, 80, 0.06); transform: translateY(-1px); }
-
-.share-twitter {
-  border: 1px solid rgba(176, 138, 72, 0.3);
-  color: var(--gold);
-}
-
-.share-twitter:hover { background: rgba(176, 138, 72, 0.06); transform: translateY(-1px); }
-
-.share-copy.copied {
-  border-color: var(--sage);
-  color: var(--sage);
-}
-
 /* ---------- Quote reveal — dramatic moment ---------- */
 .pseudo-quote.revealing {
   animation: quote-glow-pulse 1.8s ease forwards;
@@ -1146,8 +807,6 @@ body.mood-joy .bg-nature::before {
 @media (max-width: 480px) {
   .main-wrapper  { padding: 2.5rem 1rem 4rem; gap: 2rem; }
   .response-card { padding: 1.75rem 1.25rem 1.5rem; }
-  .share-card-inner { padding: 1.75rem 1.25rem 1.5rem; }
   .open-quote    { left: 0; }
   .close-quote   { right: 0; }
-  .share-options { flex-direction: column; align-items: flex-start; }
 }

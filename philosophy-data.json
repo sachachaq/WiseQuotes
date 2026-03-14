@@ -6,6 +6,7 @@
       "era": "121–180 CE",
       "school": "Stoicism",
       "weight": 4,
+      "themes": ["control", "mind", "obstacle", "strength", "action", "change", "loss", "discipline", "adversity", "power", "resist", "stress", "stuck"],
       "excerpts": [
         {
           "text": "You have power over your mind, not outside events. Realize this, and you will find strength.",
@@ -31,6 +32,7 @@
       "era": "470–399 BCE",
       "school": "Classical Greek Philosophy",
       "weight": 4,
+      "themes": ["wisdom", "knowledge", "wonder", "learn", "examine", "truth", "question", "understand", "ignorance", "life"],
       "excerpts": [
         {
           "text": "The unexamined life is not worth living.",
@@ -52,6 +54,7 @@
       "era": "428–348 BCE",
       "school": "Classical Greek Philosophy",
       "weight": 4,
+      "themes": ["love", "soul", "thinking", "poetry", "beauty", "truth", "justice", "mind", "ideal"],
       "excerpts": [
         {
           "text": "At the touch of love, everyone becomes a poet.",
@@ -73,6 +76,7 @@
       "era": "384–322 BCE",
       "school": "Peripatetic Philosophy",
       "weight": 4,
+      "themes": ["happiness", "purpose", "meaning", "virtue", "excellence", "nature", "habit", "ethics", "goal", "fulfillment", "aim"],
       "excerpts": [
         {
           "text": "Man is by nature a political animal.",
@@ -94,6 +98,7 @@
       "era": "1844–1900",
       "school": "Existentialism / Nihilism",
       "weight": 4,
+      "themes": ["struggle", "strength", "suffer", "survive", "overcome", "music", "meaning", "purpose", "love", "friendship", "marriage", "pain", "kill", "stronger"],
       "excerpts": [
         {
           "text": "That which does not kill us makes us stronger.",
@@ -119,6 +124,7 @@
       "era": "1724–1804",
       "school": "German Idealism",
       "weight": 4,
+      "themes": ["moral", "duty", "ethics", "law", "courage", "knowledge", "freedom", "mind", "right", "wrong", "principle", "universe", "starry"],
       "excerpts": [
         {
           "text": "Act only according to that maxim by which you can at the same time will that it should become a universal law.",
@@ -140,6 +146,7 @@
       "era": "6th–4th century BCE",
       "school": "Taoism",
       "weight": 3,
+      "themes": ["self", "wisdom", "power", "mastery", "journey", "nature", "patience", "hurry", "accomplish", "flow", "balance", "harmony", "slow"],
       "excerpts": [
         {
           "text": "Knowing others is intelligence; knowing yourself is true wisdom. Mastering others is strength; mastering yourself is true power.",
@@ -161,6 +168,7 @@
       "era": "551–479 BCE",
       "school": "Confucianism",
       "weight": 3,
+      "themes": ["learning", "knowledge", "persistence", "think", "danger", "wisdom", "stop", "slow", "education", "know", "progress"],
       "excerpts": [
         {
           "text": "It does not matter how slowly you go so long as you do not stop.",
@@ -182,6 +190,7 @@
       "era": "4 BCE – 65 CE",
       "school": "Stoicism",
       "weight": 3,
+      "themes": ["suffer", "imagination", "anxiety", "worry", "fear", "luck", "opportunity", "time", "day", "live", "present", "wasted", "preparation"],
       "excerpts": [
         {
           "text": "We suffer more in imagination than in reality.",
@@ -203,6 +212,7 @@
       "era": "50–135 CE",
       "school": "Stoicism",
       "weight": 3,
+      "themes": ["control", "reaction", "opinion", "attitude", "disturbed", "adversity", "choice", "identity", "respond", "react", "outside", "happen"],
       "excerpts": [
         {
           "text": "It's not what happens to you, but how you react to it that matters.",
@@ -224,6 +234,7 @@
       "era": "341–270 BCE",
       "school": "Epicureanism",
       "weight": 3,
+      "themes": ["death", "dying", "desire", "gratitude", "friendship", "happiness", "contentment", "hope", "exist", "fear", "pleasure", "want"],
       "excerpts": [
         {
           "text": "Death does not concern us, because as long as we exist, death is not here. And when it does come, we no longer exist.",
@@ -245,6 +256,7 @@
       "era": "1788–1860",
       "school": "Pessimism / Voluntarism",
       "weight": 3,
+      "themes": ["suffer", "boredom", "compassion", "talent", "genius", "pain", "happiness", "enemy", "morality", "will"],
       "excerpts": [
         {
           "text": "Talent hits a target no one else can hit; genius hits a target no one else can see.",
@@ -266,6 +278,7 @@
       "era": "1813–1855",
       "school": "Existentialism",
       "weight": 3,
+      "themes": ["understand", "life", "despair", "identity", "self", "anxiety", "freedom", "choice", "backwards", "forward", "who", "authentic"],
       "excerpts": [
         {
           "text": "Life can only be understood backwards; but it must be lived forwards.",
@@ -287,6 +300,7 @@
       "era": "1913–1960",
       "school": "Absurdism",
       "weight": 3,
+      "themes": ["struggle", "happiness", "meaning", "absurd", "resilience", "winter", "heart", "invincible", "heights", "endure", "repetition"],
       "excerpts": [
         {
           "text": "In the midst of winter, I found there was, within me, an invincible summer.",
@@ -308,6 +322,7 @@
       "era": "1905–1980",
       "school": "Existentialism",
       "weight": 3,
+      "themes": ["freedom", "choice", "existence", "responsibility", "identity", "authentic", "condemned", "define", "action", "purpose"],
       "excerpts": [
         {
           "text": "Existence precedes essence.",
@@ -329,6 +344,7 @@
       "era": "1711–1776",
       "school": "Empiricism / Skepticism",
       "weight": 3,
+      "themes": ["reason", "passion", "emotion", "beauty", "habit", "custom", "feeling", "guide", "heart"],
       "excerpts": [
         {
           "text": "Reason is, and ought only to be, the slave of the passions.",
@@ -350,6 +366,7 @@
       "era": "1632–1677",
       "school": "Rationalism",
       "weight": 2,
+      "themes": ["excellence", "difficult", "rare", "understand", "freedom", "ridicule", "effort", "scorn", "human"],
       "excerpts": [
         {
           "text": "All things excellent are as difficult as they are rare.",
@@ -371,6 +388,7 @@
       "era": "1770–1831",
       "school": "German Idealism",
       "weight": 2,
+      "themes": ["passion", "history", "accomplish", "learn", "change", "progress", "great", "achieved"],
       "excerpts": [
         {
           "text": "Nothing great in the world has been accomplished without passion.",
@@ -392,6 +410,7 @@
       "era": "1596–1650",
       "school": "Rationalism",
       "weight": 2,
+      "themes": ["thinking", "doubt", "mind", "reason", "method", "problem", "resolve", "divide", "think", "exist", "clarity"],
       "excerpts": [
         {
           "text": "I think, therefore I am.",
@@ -413,6 +432,7 @@
       "era": "1889–1951",
       "school": "Analytic Philosophy",
       "weight": 2,
+      "themes": ["language", "silence", "limits", "world", "speak", "understand", "words", "communicate", "express", "unsayable"],
       "excerpts": [
         {
           "text": "Whereof one cannot speak, thereof one must be silent.",
@@ -434,6 +454,7 @@
       "era": "1623–1662",
       "school": "Christian Philosophy",
       "weight": 2,
+      "themes": ["heart", "reason", "quiet", "alone", "solitude", "problem", "loneliness", "thinking", "human", "room", "distraction"],
       "excerpts": [
         {
           "text": "The heart has its reasons of which reason knows nothing.",
@@ -455,6 +476,7 @@
       "era": "4th century BCE",
       "school": "Taoism",
       "weight": 2,
+      "themes": ["dream", "butterfly", "flow", "free", "mind", "forget", "paradox", "nature", "trap", "illusion", "reality", "sleep"],
       "excerpts": [
         {
           "text": "Once upon a time, I dreamt I was a butterfly. Now I do not know whether I was then a man dreaming I was a butterfly, or whether I am now a butterfly dreaming I am a man.",
@@ -476,6 +498,7 @@
       "era": "1818–1883",
       "school": "Dialectical Materialism",
       "weight": 2,
+      "themes": ["change", "action", "work", "useful", "society", "needs", "ability", "interpret", "point", "system", "labor"],
       "excerpts": [
         {
           "text": "Philosophers have hitherto only interpreted the world in various ways; the point is to change it.",
@@ -497,6 +520,7 @@
       "era": "1889–1976",
       "school": "Phenomenology / Existentialism",
       "weight": 2,
+      "themes": ["language", "being", "existence", "home", "nothing", "master", "meaning", "dwelling", "belong", "words"],
       "excerpts": [
         {
           "text": "Language is the house of Being. In its home man dwells.",
@@ -518,6 +542,7 @@
       "era": "1872–1970",
       "school": "Analytic Philosophy",
       "weight": 2,
+      "themes": ["love", "knowledge", "wisdom", "doubt", "certainty", "fool", "question", "granted", "good", "life", "guide"],
       "excerpts": [
         {
           "text": "The good life is one inspired by love and guided by knowledge.",
@@ -539,6 +564,7 @@
       "era": "1225–1274",
       "school": "Scholasticism",
       "weight": 2,
+      "themes": ["love", "things", "error", "small", "grow", "knowledge", "define", "care", "values", "tells"],
       "excerpts": [
         {
           "text": "The things that we love tell us what we are.",
@@ -560,6 +586,7 @@
       "era": "1908–1986",
       "school": "Existentialism",
       "weight": 2,
+      "themes": ["change", "action", "delay", "identity", "become", "born", "infinite", "freedom", "today", "woman", "wait", "procrastinate"],
       "excerpts": [
         {
           "text": "Change your life today. Don't gamble on the future, act now, without delay.",
@@ -581,6 +608,7 @@
       "era": "1906–1975",
       "school": "Political Philosophy",
       "weight": 1,
+      "themes": ["action", "story", "meaning", "change", "power", "small", "narrative", "constellation", "seed", "word", "deed"],
       "excerpts": [
         {
           "text": "The smallest act in the most limited circumstances bears the seed of the same boundlessness, because one deed, and sometimes one word, suffices to change every constellation.",
@@ -598,6 +626,7 @@
       "era": "1915–1973",
       "school": "Eastern Philosophy / Zen",
       "weight": 1,
+      "themes": ["meaning", "life", "alive", "obvious", "panic", "rush", "achieve", "universe", "anxiety", "present", "plain", "simple", "hurry"],
       "excerpts": [
         {
           "text": "The meaning of life is just to be alive. It is so plain and so obvious and so simple. And yet everybody rushes around in a great panic as if it were necessary to achieve something beyond themselves.",
@@ -615,6 +644,7 @@
       "era": "1909–1943",
       "school": "Mystical Philosophy",
       "weight": 1,
+      "themes": ["attention", "love", "generosity", "suffer", "care", "neighbor", "empathy", "rare", "pure", "listen", "presence"],
       "excerpts": [
         {
           "text": "Attention is the rarest and purest form of generosity.",
@@ -632,6 +662,7 @@
       "era": "1926–1984",
       "school": "Post-Structuralism",
       "weight": 1,
+      "themes": ["power", "resistance", "control", "prison", "school", "discipline", "system", "institution", "rules", "conform", "authority"],
       "excerpts": [
         {
           "text": "Where there is power, there is resistance.",

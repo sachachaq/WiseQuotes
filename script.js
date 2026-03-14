@@ -30,24 +30,73 @@ const pseudoQuoteText      = document.getElementById('pseudo-quote-text');
 const philosopherExcerpt   = document.getElementById('philosopher-excerpt');
 const philosopherName      = document.getElementById('philosopher-name');
 const philosopherSource    = document.getElementById('philosopher-source');
-const newThoughtBtn        = document.getElementById('new-thought-btn');
-const anotherBtn           = document.getElementById('another-btn');
-const shareToggleBtn       = document.getElementById('share-toggle-btn');
-const shareCardWrapper     = document.getElementById('share-card-wrapper');
-const includeQuestionToggle= document.getElementById('include-question-toggle');
-const shareQuestionBlock   = document.getElementById('share-question-block');
-const shareQuestionText    = document.getElementById('share-question-text');
-const sharePseudoQuote     = document.getElementById('share-pseudo-quote-text');
-const sharePhilosopherExcerpt = document.getElementById('share-philosopher-excerpt');
-const sharePhilosopherName = document.getElementById('share-philosopher-name');
-const sharePhilosopherSourceCard = document.getElementById('share-philosopher-source-card');
-const shareCopyBtn         = document.getElementById('share-copy-btn');
-const shareTwitterBtn      = document.getElementById('share-twitter-btn');
 
 /* ---------- Helpers ---------- */
 
 function rand(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function cap(str) { return str.charAt(0).toUpperCase() + str.slice(1); }
+
+/* ---------- Kardashian deepity generator ---------- */
+
+const DEEPITY_STOP_WORDS = new Set([
+  'a','an','the','i','me','my','we','our','you','your','he','she','it','they','them',
+  'and','but','or','nor','so','yet','for','both','either',
+  'is','are','was','were','be','been','being','have','has','had',
+  'do','does','did','will','would','could','should','may','might','can','shall',
+  'to','of','in','on','at','by','for','with','about','as','into','from','through',
+  'what','when','where','why','how','who','which','that','this','these','those',
+  'just','very','really','quite','rather','too','also','even','still','already',
+  'always','never','ever','now','then','here','there','back','down','out','up','off',
+  'get','go','make','take','come','say','see','think','feel','know','want',
+  'need','find','keep','give','show','try','ask','become','leave','start','seem',
+  'something','anything','everything','nothing','someone','anyone','everyone',
+  'thing','things','way','place','time','year','day','life','world','people',
+  'good','bad','big','new','old','own','more','most','other','such','only','much',
+  'right','same','different','long','little','great','last','next','first','few',
+  'lot','lots','kind','sort','type','bit','bit','part','point','whole','each',
+  'am','were','was','been','did','does','had','has','have'
+]);
+
+const DEEPITY_TEMPLATES = [
+  t => `The ${t} you have is the ${t} you're dealing with right now.`,
+  t => `When ${t} is happening, what is happening is ${t}. And that's just what ${t} does.`,
+  t => `The thing about ${t} is that ${t} is the thing. And knowing that is knowing the thing about ${t}.`,
+  t => `You can't get through ${t} without going through ${t}. That's what makes it ${t}.`,
+  t => `${cap(t)} changes you, and when it does, you are changed by ${t}.`,
+  t => `When ${t} is in your life, your life has ${t} in it. And that's honestly a lot.`,
+  t => `The ${t} you're carrying is the weight of ${t}. And carrying ${t} means ${t} is being carried.`,
+  t => `${cap(t)} is hard because ${t} is hard. And hard things, like ${t}, are hard.`,
+  t => `What you're going through with ${t} is the part of ${t} you're currently going through.`,
+  t => `The version of ${t} you have is your version of ${t}, which is yours.`,
+  t => `I've thought a lot about ${t}, and I always come back to: ${t} is the ${t} you're living.`,
+  t => `Before there was ${t} in your life, there wasn't ${t}. Now there is. That's growth.`,
+  t => `Every part of ${t} is a part of the whole ${t}. And the whole thing is all of the ${t}.`,
+  t => `${cap(t)} happened, which means ${t} has occurred. And when ${t} occurs, it's already happened.`,
+  t => `The ${t} in your situation is really the situation of your ${t}. Which is still ${t}.`,
+  t => `You're not just experiencing ${t} — you're having a full ${t} experience. That's what ${t} is.`,
+  t => `${cap(t)} is a journey, and every journey has ${t} in it, because the journey is the ${t}.`,
+  t => `At the end of the day, ${t} is at the end of the day. And that's where ${t} lives.`,
+];
+
+function extractTopic(text) {
+  if (!text || text.trim().length < 3) return null;
+  const words = text.toLowerCase()
+    .replace(/[^a-z\s]/g, ' ')
+    .split(/\s+/)
+    .filter(w => w.length >= 4 && !DEEPITY_STOP_WORDS.has(w));
+  if (!words.length) return null;
+  // Prefer longer, more specific words
+  words.sort((a, b) => b.length - a.length);
+  return words[0];
+}
+
+function generateKardashianDeepity() {
+  const topic = extractTopic(questionInput.value.trim());
+  if (topic) return rand(DEEPITY_TEMPLATES)(topic);
+  return rand(philosophyData.pseudoProfoundTemplates.kardashian);
 }
 
 function getVibeKey(value) {
@@ -72,21 +121,47 @@ function updateBird(value) {
   vibeBird.style.left = value + '%';
 }
 
-function weightedRand(pool) {
-  const total = pool.reduce((sum, p) => sum + (p.weight ?? 1), 0);
+function weightedRand(pool, scoreFn = p => p.weight ?? 1) {
+  const total = pool.reduce((sum, p) => sum + scoreFn(p), 0);
   let r = Math.random() * total;
   for (const p of pool) {
-    r -= (p.weight ?? 1);
+    r -= scoreFn(p);
     if (r <= 0) return p;
   }
   return pool[pool.length - 1];
 }
 
-function pickPhilosopher(allPhilosophers) {
+function extractInputKeywords(text) {
+  if (!text || text.trim().length < 3) return new Set();
+  return new Set(
+    text.toLowerCase()
+      .replace(/[^a-z\s]/g, ' ')
+      .split(/\s+/)
+      .filter(w => w.length >= 4 && !DEEPITY_STOP_WORDS.has(w))
+  );
+}
+
+function scorePhilosopher(philosopher, keywords) {
+  const base = philosopher.weight ?? 1;
+  if (!keywords.size || !philosopher.themes) return base;
+  let matches = 0;
+  for (const theme of philosopher.themes) {
+    for (const kw of keywords) {
+      if (kw.includes(theme) || theme.includes(kw)) {
+        matches++;
+        break; // count each theme once
+      }
+    }
+  }
+  // Each thematic match adds 3× base weight; strong matches lift the philosopher significantly
+  return base + matches * 3;
+}
+
+function pickPhilosopher(allPhilosophers, keywords) {
   // Exclude recently used philosophers; fall back to full pool if too few remain
   const fresh = allPhilosophers.filter(p => !recentPhilosopherIds.includes(p.id));
   const pool  = fresh.length >= 4 ? fresh : allPhilosophers;
-  const chosen = weightedRand(pool);
+  const chosen = weightedRand(pool, p => scorePhilosopher(p, keywords));
 
   // Record the pick and trim the window
   recentPhilosopherIds.push(chosen.id);
@@ -95,21 +170,41 @@ function pickPhilosopher(allPhilosophers) {
   return chosen;
 }
 
+function pickExcerpt(excerpts, keywords) {
+  if (!keywords.size || excerpts.length <= 1) return rand(excerpts);
+  // Score each excerpt by how many input keywords appear in its text
+  return weightedRand(excerpts, e => {
+    const lower = e.text.toLowerCase();
+    let score = 1;
+    for (const kw of keywords) {
+      if (lower.includes(kw)) score += 2;
+    }
+    return score;
+  });
+}
+
 function pick(excluding = null) {
   const vibeKey  = getVibeKey(parseInt(vibeSlider.value, 10));
-  const quotes   = philosophyData.pseudoProfoundTemplates[vibeKey];
   const philosophers = philosophyData.philosophers;
+  const keywords = extractInputKeywords(questionInput.value.trim());
 
-  // Pick a pseudo-quote (avoid repeating if possible)
-  let pseudoList = excluding ? quotes.filter(q => q !== excluding.pseudo) : quotes;
-  if (!pseudoList.length) pseudoList = quotes;
-  const pseudo = rand(pseudoList);
+  // Pick a pseudo-quote
+  let pseudo;
+  if (vibeKey === 'kardashian') {
+    // Dynamically generated from user input
+    pseudo = generateKardashianDeepity();
+  } else {
+    const quotes = philosophyData.pseudoProfoundTemplates[vibeKey];
+    let pseudoList = excluding ? quotes.filter(q => q !== excluding.pseudo) : quotes;
+    if (!pseudoList.length) pseudoList = quotes;
+    pseudo = rand(pseudoList);
+  }
 
-  // Pick philosopher with recency filtering
-  const philosopher = pickPhilosopher(philosophers);
+  // Pick philosopher weighted by thematic relevance to user input
+  const philosopher = pickPhilosopher(philosophers, keywords);
 
-  // Pick excerpt from that philosopher
-  const excerptObj = rand(philosopher.excerpts);
+  // Pick the most relevant excerpt from that philosopher
+  const excerptObj = pickExcerpt(philosopher.excerpts, keywords);
 
   return {
     pseudo,
@@ -316,36 +411,6 @@ function revealResponse(result, question) {
   }, 100);
 }
 
-/* ---------- Share card ---------- */
-
-function populateShareCard(result, question) {
-  shareQuestionText.textContent = question || '';
-  sharePseudoQuote.textContent  = result.pseudo;
-  sharePhilosopherExcerpt.textContent = `"${result.excerpt}"`;
-  sharePhilosopherName.textContent    = result.philosopher;
-  sharePhilosopherSourceCard.textContent = result.source;
-}
-
-function syncShareQuestionVisibility() {
-  shareQuestionBlock.hidden = !includeQuestionToggle.checked;
-}
-
-function buildShareText() {
-  const lines = [];
-  const q = questionInput.value.trim();
-  if (includeQuestionToggle.checked && q) {
-    lines.push(`"${q}"`);
-    lines.push('');
-  }
-  lines.push(`"${currentResult.pseudo}"`);
-  lines.push('');
-  lines.push(`"${currentResult.excerpt}"`);
-  lines.push(`— ${currentResult.philosopher}, ${currentResult.source}`);
-  lines.push('');
-  lines.push('✦ WiseQuotes — wisequotes.app');
-  return lines.join('\n');
-}
-
 /* ---------- Main ask flow ---------- */
 
 async function loadData() {
@@ -375,15 +440,11 @@ async function handleAsk() {
 
     // Reset card state before re-animating
     responseCard.classList.remove('revealed');
-    shareCardWrapper.hidden = true;
-    shareToggleBtn.textContent = 'Share this wisdom';
 
     // Small delay so removal of .revealed doesn't cancel the new transition
     await new Promise(r => setTimeout(r, 30));
 
     revealResponse(currentResult, question);
-    populateShareCard(currentResult, question);
-    newThoughtBtn.hidden = false;
 
   } catch (err) {
     console.error('WiseQuotes error:', err);
@@ -393,29 +454,6 @@ async function handleAsk() {
     askBtn.querySelector('.ask-btn-inner').innerHTML =
       '<span class="ask-icon" aria-hidden="true">✦</span> Ask the Universe';
   }
-}
-
-async function handleAnother() {
-  if (!philosophyData) return;
-
-  anotherBtn.disabled = true;
-  anotherBtn.textContent = 'Seeking…';
-
-  await new Promise(r => setTimeout(r, 600 + Math.random() * 400));
-
-  currentResult = pick(currentResult);
-
-  responseCard.classList.remove('revealed');
-  shareCardWrapper.hidden = true;
-  shareToggleBtn.textContent = 'Share this wisdom';
-
-  await new Promise(r => setTimeout(r, 30));
-
-  revealResponse(currentResult, questionInput.value.trim());
-  populateShareCard(currentResult, questionInput.value.trim());
-
-  anotherBtn.disabled = false;
-  anotherBtn.textContent = 'Another truth';
 }
 
 /* ---------- Event listeners ---------- */
@@ -444,91 +482,6 @@ questionInput.addEventListener('keydown', e => {
 
 // Ask button
 askBtn.addEventListener('click', handleAsk);
-
-// New thought — full reset
-newThoughtBtn.addEventListener('click', () => {
-  // Clear input
-  questionInput.value = '';
-  charCount.textContent = '0 / 280';
-
-  // Hide response + share card
-  responseCard.classList.remove('revealed');
-  responseSection.hidden = true;
-  shareCardWrapper.hidden = true;
-  shareToggleBtn.textContent = 'Share this wisdom';
-
-  // Reset slider and bird
-  vibeSlider.value = 50;
-  updateSliderUI(50);
-
-  // Reset mood
-  applyMood(null);
-  currentResult = null;
-
-  // Hide this button
-  newThoughtBtn.hidden = true;
-
-  // Scroll back to top
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  // Focus input
-  setTimeout(() => questionInput.focus(), 400);
-});
-
-// Another truth
-anotherBtn.addEventListener('click', handleAnother);
-
-// Share card toggle
-shareToggleBtn.addEventListener('click', () => {
-  const isHidden = shareCardWrapper.hidden;
-  shareCardWrapper.hidden = !isHidden;
-  shareToggleBtn.textContent = isHidden ? 'Hide share card' : 'Share this wisdom';
-  if (isHidden) {
-    setTimeout(() => {
-      shareCardWrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 100);
-  }
-});
-
-// Include question toggle
-includeQuestionToggle.addEventListener('change', syncShareQuestionVisibility);
-
-// Copy share text
-shareCopyBtn.addEventListener('click', async () => {
-  if (!currentResult) return;
-  try {
-    await navigator.clipboard.writeText(buildShareText());
-    shareCopyBtn.textContent = 'Copied!';
-    shareCopyBtn.classList.add('copied');
-    setTimeout(() => {
-      shareCopyBtn.textContent = 'Copy card text';
-      shareCopyBtn.classList.remove('copied');
-    }, 2200);
-  } catch {
-    // Fallback for browsers that block clipboard
-    const ta = document.createElement('textarea');
-    ta.value = buildShareText();
-    ta.style.cssText = 'position:fixed;opacity:0';
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    ta.remove();
-    shareCopyBtn.textContent = 'Copied!';
-    setTimeout(() => { shareCopyBtn.textContent = 'Copy card text'; }, 2200);
-  }
-});
-
-// Share on X / Twitter
-shareTwitterBtn.addEventListener('click', () => {
-  if (!currentResult) return;
-  const tweet = [
-    `"${currentResult.pseudo}"`,
-    '',
-    `✦ WiseQuotes`
-  ].join('\n');
-  const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`;
-  window.open(url, '_blank', 'noopener,noreferrer');
-});
 
 /* ---------- Init ---------- */
 

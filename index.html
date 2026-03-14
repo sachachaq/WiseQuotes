@@ -30,6 +30,7 @@
     <header class="site-header">
       <div class="logo-glyph" aria-hidden="true">✦</div>
       <h1 class="site-title">WiseQuotes</h1>
+      <p class="site-subtitle">Two friends, Chippy &amp; Coon bravely thinking thoughts</p>
       <p class="site-tagline">The universe has been waiting to answer you.</p>
     </header>
 
@@ -63,25 +64,9 @@
           <div class="slider-fill" id="slider-fill"></div>
           <!-- Bird marker -->
           <div class="vibe-bird" id="vibe-bird" aria-hidden="true">
-            <svg class="bird-svg" viewBox="0 0 56 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Body -->
-              <path class="bd-body" d="M 7 24 C 9 15 22 13 30 18 C 28 26 17 31 7 24 Z"/>
-              <!-- Head -->
-              <path class="bd-head" d="M 28 18 C 29 10 37 9 38 14 C 39 19 33 23 29 20 Z"/>
-              <!-- Beak -->
-              <path class="bd-beak" d="M 37 12 L 46 11"/>
-              <!-- Eye -->
-              <circle class="bd-eye" cx="34" cy="13" r="1.6"/>
-              <!-- Tail — upper prong -->
-              <path class="bd-tail" d="M 7 24 C 3 18 1 13 3 9"/>
-              <!-- Tail — lower prong -->
-              <path class="bd-tail" d="M 8 25 C 3 28 1 33 3 38"/>
-              <!-- Wing (animated) -->
-              <path class="bd-wing" d="M 14 22 C 17 14 25 12 29 16"/>
-              <!-- Left foot -->
-              <path class="bd-feet" d="M 17 30 L 14 40 M 17 30 L 19 40"/>
-              <!-- Right foot -->
-              <path class="bd-feet" d="M 23 32 L 20 40 M 23 32 L 24 40 M 23 32 L 26 38"/>
+            <svg class="bird-svg" viewBox="0 0 36 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 1 11 C 5 5 9 2 16 6 Q 18 8 20 6 C 27 2 31 5 35 11"
+                    stroke="#9a8c72" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
         </div>
@@ -95,9 +80,6 @@
             Ask the Universe
           </span>
           <span class="ask-btn-shimmer" aria-hidden="true"></span>
-        </button>
-        <button id="new-thought-btn" class="new-thought-btn" type="button" hidden>
-          New thought
         </button>
       </div>
     </section>
@@ -137,50 +119,6 @@
           </footer>
         </div>
 
-        <!-- Actions row -->
-        <div class="response-actions">
-          <button id="another-btn" class="another-btn" type="button">
-            Another truth
-          </button>
-          <button id="share-toggle-btn" class="share-toggle-btn" type="button">
-            Share this wisdom
-          </button>
-        </div>
-      </div>
-
-      <!-- Share card (toggled) -->
-      <div class="share-card-wrapper" id="share-card-wrapper" hidden>
-        <div class="share-card" id="share-card">
-          <div class="share-card-inner">
-            <div class="share-card-logo">✦ WiseQuotes</div>
-
-            <div class="share-question-block" id="share-question-block">
-              <p class="share-question-text" id="share-question-text"></p>
-            </div>
-
-            <blockquote class="share-pseudo-quote" id="share-pseudo-quote-text"></blockquote>
-
-            <div class="share-divider" aria-hidden="true"></div>
-
-            <p class="share-philosopher-excerpt" id="share-philosopher-excerpt"></p>
-            <footer class="share-meta">
-              <span class="share-philosopher-name" id="share-philosopher-name"></span>
-              <span class="share-philosopher-source" id="share-philosopher-source-card"></span>
-            </footer>
-          </div>
-        </div>
-
-        <div class="share-options">
-          <label class="share-option-toggle">
-            <input type="checkbox" id="include-question-toggle" checked />
-            <span class="toggle-track" aria-hidden="true"></span>
-            Include my question
-          </label>
-          <div class="share-buttons">
-            <button class="share-btn share-copy" id="share-copy-btn" type="button">Copy card text</button>
-            <button class="share-btn share-twitter" id="share-twitter-btn" type="button">Share on X</button>
-          </div>
-        </div>
       </div>
 
     </section>
