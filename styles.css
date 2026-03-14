@@ -1,0 +1,1015 @@
+/* =========================================================
+   WiseQuotes — styles.css
+   Light · Zen · Nature-inspired redesign
+   ========================================================= */
+
+/* ---------- Reset & base ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream:        #f5f0e8;
+  --cream-warm:   #ede7d8;
+  --cream-deep:   #e2daca;
+  --ink:          #2d2820;
+  --ink-soft:     #584f43;
+  --ink-mute:     #8a7e70;
+  --sage:         #78896f;
+  --sage-light:   #a3b89a;
+  --sage-pale:    rgba(148, 175, 138, 0.16);
+  --stone:        #a89880;
+  --stone-light:  #cbbfa8;
+  --sky:          #92aec0;
+  --sky-pale:     #d4e2ea;
+  --gold:         #b08a48;
+  --gold-light:   #c9a86a;
+  --gold-glow:    rgba(176, 138, 72, 0.22);
+  --card-bg:      rgba(252, 248, 242, 0.86);
+  --card-border:  rgba(168, 152, 128, 0.22);
+  --radius:       1.5rem;
+  --transition:   0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  color: var(--ink);
+  background: var(--cream);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+  transition: background-color 1.8s ease;
+}
+
+/* Mood-shifted base tones */
+body.mood-calm   { background-color: #edf2e8; }
+body.mood-stress { background-color: #eaecf0; }
+body.mood-joy    { background-color: #f4ebe0; }
+body.mood-sad    { background-color: #e9edf2; }
+
+/* ---------- Background layers ---------- */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Atmosphere: soft gradient blobs ── */
+.bg-atmosphere {
+  background:
+    radial-gradient(ellipse 75% 55% at 12% 28%, rgba(160, 185, 145, 0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 45% at 88% 62%, rgba(195, 182, 160, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 65% 40% at 52% 92%, rgba(170, 195, 185, 0.14) 0%, transparent 55%);
+  animation: atm-default 28s ease-in-out infinite alternate;
+  transition: opacity 2s ease;
+}
+
+@keyframes atm-default {
+  from { transform: scale(1) translate(0, 0); }
+  to   { transform: scale(1.04) translate(6px, -5px); }
+}
+
+/* calm — misty zen garden, sage & celadon */
+body.mood-calm .bg-atmosphere {
+  background:
+    radial-gradient(ellipse 95% 65% at 8% 42%, rgba(130, 168, 125, 0.28) 0%, transparent 65%),
+    radial-gradient(ellipse 75% 50% at 92% 55%, rgba(168, 196, 165, 0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 110% 40% at 50% 102%, rgba(190, 210, 188, 0.18) 0%, transparent 55%);
+  animation: atm-calm 45s ease-in-out infinite alternate;
+}
+
+@keyframes atm-calm {
+  from { transform: scale(1) translate(0, 0); filter: blur(0px); }
+  to   { transform: scale(1.03) translate(4px, -3px); filter: blur(0.5px); }
+}
+
+/* stress — gray-blue shifting, wind-like movement */
+body.mood-stress .bg-atmosphere {
+  background:
+    radial-gradient(ellipse 80% 50% at 22% 32%, rgba(165, 178, 196, 0.26) 0%, transparent 58%),
+    radial-gradient(ellipse 65% 42% at 78% 58%, rgba(180, 188, 202, 0.2) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 38% at 50% 82%, rgba(172, 182, 198, 0.16) 0%, transparent 52%);
+  animation: atm-stress 7s ease-in-out infinite alternate;
+}
+
+@keyframes atm-stress {
+  0%   { transform: translate(0, 0) skewX(0deg); }
+  30%  { transform: translate(18px, -10px) skewX(0.4deg); }
+  65%  { transform: translate(-10px, 7px) skewX(-0.3deg); }
+  100% { transform: translate(12px, -14px) skewX(0.5deg); }
+}
+
+/* joy — warm sunrise from below, peach & gold */
+body.mood-joy .bg-atmosphere {
+  background:
+    radial-gradient(ellipse 110% 65% at 50% 112%, rgba(232, 192, 128, 0.36) 0%, transparent 55%),
+    radial-gradient(ellipse 75% 48% at 18% 78%, rgba(230, 178, 118, 0.24) 0%, transparent 55%),
+    radial-gradient(ellipse 65% 42% at 82% 18%, rgba(245, 215, 162, 0.2) 0%, transparent 52%);
+  animation: atm-joy 14s ease-in-out infinite alternate;
+}
+
+@keyframes atm-joy {
+  from { transform: scale(1) translateY(0); opacity: 0.88; }
+  to   { transform: scale(1.07) translateY(-12px); opacity: 1; }
+}
+
+/* sad — soft overcast, cool blue-gray */
+body.mood-sad .bg-atmosphere {
+  background:
+    radial-gradient(ellipse 95% 58% at 50% -2%, rgba(178, 196, 212, 0.3) 0%, transparent 60%),
+    radial-gradient(ellipse 72% 42% at 18% 62%, rgba(168, 185, 202, 0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 62% 38% at 82% 40%, rgba(175, 192, 208, 0.18) 0%, transparent 52%);
+  animation: atm-sad 32s ease-in-out infinite alternate;
+}
+
+@keyframes atm-sad {
+  from { transform: translateY(0); }
+  to   { transform: translateY(8px); }
+}
+
+/* ── Nature overlay: mood-specific effects ── */
+.bg-nature { overflow: hidden; }
+
+/* Default mist elements — only visible in calm mood */
+.nature-el {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 2s ease;
+  filter: blur(35px);
+}
+
+body.mood-calm .nature-el { opacity: 1; }
+
+.ne-1 {
+  width: 65vw; height: 28vw;
+  background: radial-gradient(ellipse, rgba(155, 190, 148, 0.14) 0%, transparent 70%);
+  top: 18%; left: -18%;
+  animation: mist-drift-1 50s ease-in-out infinite alternate;
+}
+
+.ne-2 {
+  width: 55vw; height: 22vw;
+  background: radial-gradient(ellipse, rgba(175, 200, 185, 0.11) 0%, transparent 70%);
+  bottom: 12%; right: -12%;
+  animation: mist-drift-2 62s ease-in-out infinite alternate;
+}
+
+.ne-3 {
+  width: 85vw; height: 18vw;
+  background: radial-gradient(ellipse, rgba(188, 210, 192, 0.09) 0%, transparent 70%);
+  top: 52%; left: 8%;
+  animation: mist-drift-3 38s ease-in-out infinite alternate;
+}
+
+@keyframes mist-drift-1 { from { transform: translate(0, 0); } to { transform: translate(28px, 14px); } }
+@keyframes mist-drift-2 { from { transform: translate(0, 0); } to { transform: translate(-22px, -20px); } }
+@keyframes mist-drift-3 { from { transform: translate(0, 0) scaleX(1); } to { transform: translate(14px, 8px) scaleX(1.04); } }
+
+/* Wind streaks — stress */
+body.mood-stress .bg-nature::before,
+body.mood-stress .bg-nature::after {
+  content: '';
+  position: absolute;
+  width: 220%;
+  height: 1px;
+  left: -10%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(155, 168, 188, 0.18) 25%,
+    rgba(155, 168, 188, 0.22) 55%,
+    rgba(155, 168, 188, 0.12) 80%,
+    transparent 100%);
+  animation: wind-streak 7s ease-in-out infinite;
+}
+
+body.mood-stress .bg-nature::before { top: 33%; animation-delay: 0s; }
+body.mood-stress .bg-nature::after  { top: 61%; animation-delay: -3.2s; }
+
+@keyframes wind-streak {
+  0%   { transform: translateX(-25%) scaleX(0.4); opacity: 0; }
+  18%  { opacity: 1; }
+  80%  { opacity: 0.6; }
+  100% { transform: translateX(5%) scaleX(1.1); opacity: 0; }
+}
+
+/* Soft rain — sad */
+body.mood-sad .bg-nature::before {
+  content: '';
+  position: absolute;
+  inset: -15% 0 0 0;
+  background-image: repeating-linear-gradient(
+    -14deg,
+    transparent 0px, transparent 7px,
+    rgba(148, 168, 188, 0.07) 7px, rgba(148, 168, 188, 0.07) 8px
+  );
+  background-size: 44px 110px;
+  animation: soft-rain 2s linear infinite;
+}
+
+@keyframes soft-rain {
+  from { background-position: 0 0; }
+  to   { background-position: -22px 110px; }
+}
+
+/* Warm sunrise glow — joy */
+body.mood-joy .bg-nature::before {
+  content: '';
+  position: absolute;
+  bottom: -25%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150%;
+  height: 65%;
+  background: radial-gradient(ellipse at 50% 100%,
+    rgba(225, 175, 85, 0.16) 0%,
+    rgba(240, 200, 120, 0.08) 40%,
+    transparent 70%);
+  border-radius: 50%;
+  animation: sunrise-pulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes sunrise-pulse {
+  from { opacity: 0.55; transform: translateX(-50%) scaleY(1); }
+  to   { opacity: 1;    transform: translateX(-50%) scaleY(1.12); }
+}
+
+/* Subtle paper dot texture */
+.bg-texture {
+  background-image: radial-gradient(circle, rgba(90, 72, 50, 0.022) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* ---------- Layout ---------- */
+.main-wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+/* ---------- Header ---------- */
+.site-header { text-align: center; }
+
+.logo-glyph {
+  font-size: 1.75rem;
+  color: var(--gold);
+  display: block;
+  margin-bottom: .6rem;
+  animation: glyph-breathe 5s ease-in-out infinite;
+}
+
+@keyframes glyph-breathe {
+  0%, 100% { opacity: 0.75; transform: scale(1); }
+  50%       { opacity: 1;    transform: scale(1.08); }
+}
+
+.site-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(2.2rem, 5.5vw, 3.2rem);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.site-tagline {
+  margin-top: .8rem;
+  font-size: .82rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* ---------- Ask section ---------- */
+.ask-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.input-shell {
+  width: 100%;
+  position: relative;
+}
+
+.question-input {
+  width: 100%;
+  background: rgba(255, 252, 246, 0.78);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem 2rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--ink);
+  resize: none;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  line-height: 1.7;
+  box-shadow: 0 2px 16px rgba(80, 60, 40, 0.06);
+}
+
+.question-input::placeholder { color: var(--ink-mute); font-style: italic; opacity: 0.7; }
+
+.question-input:focus {
+  border-color: rgba(120, 137, 111, 0.5);
+  box-shadow: 0 0 0 4px rgba(120, 137, 111, 0.08), 0 4px 24px rgba(80, 60, 40, 0.1);
+  background: rgba(255, 253, 248, 0.9);
+}
+
+.char-count {
+  position: absolute;
+  bottom: .6rem;
+  right: 1rem;
+  font-size: .68rem;
+  color: var(--ink-mute);
+  letter-spacing: .05em;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* ---------- Vibe slider ---------- */
+.vibe-control {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.vibe-label {
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.slider-track {
+  flex: 1;
+  position: relative;
+  height: 3px;
+  background: rgba(120, 100, 80, 0.12);
+  border-radius: 2px;
+}
+
+.slider-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: linear-gradient(90deg, var(--sage), var(--gold));
+  border-radius: 2px;
+  pointer-events: none;
+  transition: width .1s;
+}
+
+.vibe-slider {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  margin: 0;
+  -webkit-appearance: none;
+  z-index: 2;
+}
+
+.slider-thumb-label {
+  position: absolute;
+  top: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: .68rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+  transition: left .1s;
+  pointer-events: none;
+}
+
+/* ---------- Ask row ---------- */
+.ask-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ---------- Ask button ---------- */
+.ask-btn {
+  position: relative;
+  background: transparent;
+  border: 1px solid rgba(120, 137, 111, 0.5);
+  border-radius: 3rem;
+  padding: .9rem 2.8rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.12rem;
+  font-weight: 400;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--sage);
+  cursor: pointer;
+  overflow: hidden;
+  transition: color var(--transition), border-color var(--transition), box-shadow var(--transition), background var(--transition), transform var(--transition);
+}
+
+.ask-btn:hover {
+  color: var(--ink);
+  border-color: var(--sage);
+  background: rgba(120, 137, 111, 0.06);
+  box-shadow: 0 4px 20px rgba(120, 137, 111, 0.14);
+  transform: translateY(-1px);
+}
+
+.ask-btn:active { transform: translateY(0); }
+
+.ask-btn-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+.ask-icon {
+  display: inline-block;
+  animation: spin-slow 10s linear infinite;
+  font-size: .9rem;
+  opacity: 0.8;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.ask-btn-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.3) 50%, transparent 65%);
+  transform: translateX(-100%);
+}
+
+.ask-btn:hover .ask-btn-shimmer {
+  animation: shimmer-slide .55s ease forwards;
+}
+
+@keyframes shimmer-slide {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+.ask-btn.loading {
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+/* ---------- New thought button ---------- */
+.new-thought-btn {
+  background: transparent;
+  border: none;
+  padding: .4rem .2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: .72rem;
+  font-weight: 300;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity var(--transition), color var(--transition);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition: opacity var(--transition), text-decoration-color var(--transition);
+}
+
+.new-thought-btn:hover {
+  opacity: 1;
+  color: var(--sage);
+  text-decoration-color: var(--sage);
+}
+
+/* ---------- Response section ---------- */
+.response-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.response-card {
+  width: 100%;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 2.5rem 2.5rem 2rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    0 4px 32px rgba(80, 60, 40, 0.1),
+    0 1px 0 rgba(255, 252, 246, 0.9) inset;
+
+  opacity: 0;
+  transform: translateY(20px) scale(.985);
+  transition: opacity .65s ease, transform .65s cubic-bezier(.2,0,0,1);
+}
+
+.response-card.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Question echo */
+.response-question { margin-bottom: 1.5rem; }
+
+.response-question-label {
+  display: block;
+  font-size: .66rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: .4rem;
+}
+
+.response-question-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+/* Divider glyph */
+.divider-glyph {
+  text-align: center;
+  color: var(--stone-light);
+  font-size: .7rem;
+  letter-spacing: .35em;
+  margin: 1rem 0;
+}
+
+/* Pseudo-profound quote */
+.pseudo-quote {
+  position: relative;
+  text-align: center;
+  padding: 1rem 0;
+  margin: .5rem 0 1.5rem;
+}
+
+.quote-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  line-height: 0;
+  color: var(--stone-light);
+  opacity: 0.5;
+  position: absolute;
+  font-weight: 300;
+}
+
+.open-quote  { top: 1.1rem; left: -.25rem; }
+.close-quote { bottom: -.7rem; right: -.25rem; }
+
+.pseudo-quote-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.2rem, 3vw, 1.58rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--ink);
+  display: block;
+  padding: 0 1.5rem;
+}
+
+/* Word-by-word reveal */
+.pseudo-quote-text .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: word-appear .38s ease forwards;
+}
+
+@keyframes word-appear {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Divider line */
+.divider-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--card-border), transparent);
+  margin: 1.5rem 0;
+}
+
+/* Philosopher block */
+.philosopher-block { text-align: center; }
+
+.philosopher-excerpt {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--ink-soft);
+  line-height: 1.8;
+  max-width: 520px;
+  margin: 0 auto .75rem;
+
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .6s ease .5s, transform .6s ease .5s;
+}
+
+.philosopher-excerpt.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.philosopher-name {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .95rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: var(--gold);
+
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .5s ease .8s, transform .5s ease .8s;
+}
+
+.philosopher-name.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.philosopher-source {
+  display: block;
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  opacity: 0;
+  transition: opacity .5s ease 1s;
+  margin-top: .2rem;
+}
+
+.philosopher-source.visible { opacity: 0.65; }
+
+/* Response actions */
+.response-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.75rem;
+  flex-wrap: wrap;
+}
+
+.another-btn,
+.share-toggle-btn {
+  background: transparent;
+  border-radius: 2rem;
+  padding: .55rem 1.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: .76rem;
+  font-weight: 300;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.another-btn {
+  border: 1px solid rgba(120, 137, 111, 0.3);
+  color: var(--sage);
+}
+
+.another-btn:hover {
+  background: rgba(120, 137, 111, 0.07);
+  border-color: var(--sage);
+  transform: translateY(-1px);
+}
+
+.share-toggle-btn {
+  border: 1px solid rgba(176, 138, 72, 0.3);
+  color: var(--gold);
+}
+
+.share-toggle-btn:hover {
+  background: rgba(176, 138, 72, 0.06);
+  border-color: var(--gold);
+  box-shadow: 0 3px 14px var(--gold-glow);
+  transform: translateY(-1px);
+}
+
+/* ---------- Share card ---------- */
+.share-card-wrapper {
+  width: 100%;
+  animation: fade-up .5s ease forwards;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.share-card {
+  width: 100%;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: linear-gradient(148deg, #faf5ec 0%, #f2ebe0 55%, #ede4d6 100%);
+  border: 1px solid rgba(168, 152, 128, 0.28);
+  box-shadow: 0 6px 32px rgba(80, 60, 40, 0.12);
+  position: relative;
+}
+
+.share-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55% 35% at 85% 15%, rgba(184, 151, 90, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 28% at 15% 85%, rgba(120, 137, 111, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.share-card-inner {
+  padding: 2.5rem 2.5rem 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.share-card-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .75rem;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.6;
+  margin-bottom: 1.5rem;
+}
+
+.share-question-block { margin-bottom: 1rem; }
+
+.share-question-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .95rem;
+  font-style: italic;
+  color: var(--ink-soft);
+  opacity: 0.8;
+}
+
+.share-pseudo-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--ink);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.share-pseudo-quote::before { content: '"'; color: var(--stone-light); margin-right: .1em; }
+.share-pseudo-quote::after  { content: '"'; color: var(--stone-light); margin-left: .1em; }
+
+.share-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(168, 152, 128, 0.3), transparent);
+  margin: 1rem 0;
+}
+
+.share-philosopher-excerpt {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .9rem;
+  font-style: italic;
+  color: var(--ink-soft);
+  opacity: 0.8;
+  line-height: 1.75;
+  margin-bottom: .5rem;
+}
+
+.share-meta { display: flex; flex-direction: column; gap: .1rem; }
+
+.share-philosopher-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: .08em;
+}
+
+.share-philosopher-source {
+  font-size: .68rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  opacity: 0.65;
+}
+
+/* Share options bar */
+.share-options {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.share-option-toggle {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  cursor: pointer;
+  user-select: none;
+}
+
+.share-option-toggle input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0; height: 0;
+}
+
+.toggle-track {
+  display: inline-block;
+  width: 2.4rem;
+  height: 1.25rem;
+  background: rgba(120, 100, 80, 0.1);
+  border: 1px solid rgba(120, 100, 80, 0.2);
+  border-radius: 1rem;
+  position: relative;
+  transition: background var(--transition), border-color var(--transition);
+  flex-shrink: 0;
+}
+
+.toggle-track::after {
+  content: '';
+  position: absolute;
+  top: .15rem; left: .15rem;
+  width: .9rem; height: .9rem;
+  background: var(--stone-light);
+  border-radius: 50%;
+  transition: transform var(--transition), background var(--transition);
+}
+
+.share-option-toggle input:checked + .toggle-track {
+  background: rgba(176, 138, 72, 0.14);
+  border-color: rgba(176, 138, 72, 0.4);
+}
+
+.share-option-toggle input:checked + .toggle-track::after {
+  transform: translateX(1.15rem);
+  background: var(--gold);
+}
+
+.share-buttons { display: flex; gap: .75rem; }
+
+.share-btn {
+  background: transparent;
+  border-radius: 2rem;
+  padding: .48rem 1.15rem;
+  font-size: .7rem;
+  font-weight: 400;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.share-copy {
+  border: 1px solid rgba(120, 100, 80, 0.25);
+  color: var(--ink-soft);
+}
+
+.share-copy:hover { background: rgba(120, 100, 80, 0.06); transform: translateY(-1px); }
+
+.share-twitter {
+  border: 1px solid rgba(176, 138, 72, 0.3);
+  color: var(--gold);
+}
+
+.share-twitter:hover { background: rgba(176, 138, 72, 0.06); transform: translateY(-1px); }
+
+.share-copy.copied {
+  border-color: var(--sage);
+  color: var(--sage);
+}
+
+/* ---------- Quote reveal — dramatic moment ---------- */
+.pseudo-quote.revealing {
+  animation: quote-glow-pulse 1.8s ease forwards;
+}
+
+@keyframes quote-glow-pulse {
+  0%   { filter: none; }
+  28%  { filter: drop-shadow(0 0 10px rgba(176,138,72,.32)) drop-shadow(0 0 24px rgba(120,137,111,.18)); }
+  65%  { filter: drop-shadow(0 0 7px rgba(176,138,72,.22)) drop-shadow(0 0 16px rgba(120,137,111,.12)); }
+  100% { filter: none; }
+}
+
+.response-card.pop {
+  animation: card-pop .48s cubic-bezier(.2,1.4,.4,1) forwards;
+}
+
+@keyframes card-pop {
+  0%   { transform: scale(.975); }
+  55%  { transform: scale(1.012); }
+  100% { transform: scale(1); }
+}
+
+/* Shimmer sweep */
+.pseudo-quote-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 22%,
+    rgba(255, 248, 225, 0.55) 46%,
+    rgba(201, 168, 106, 0.28) 52%,
+    transparent 74%
+  );
+  border-radius: .5rem;
+  pointer-events: none;
+  opacity: 0;
+  animation: shimmer-sweep .9s ease .12s forwards;
+}
+
+@keyframes shimmer-sweep {
+  0%   { opacity: 0; transform: translateX(-110%); }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { opacity: 0; transform: translateX(110%); }
+}
+
+/* Sparkle particles */
+.sparkle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 100;
+  font-size: 1rem;
+  line-height: 1;
+  animation: sparkle-life var(--dur, .9s) ease forwards;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+@keyframes sparkle-life {
+  0%   { opacity: 0; transform: translate(0, 0) scale(0) rotate(0deg); }
+  25%  { opacity: 1; transform: translate(var(--tx1), var(--ty1)) scale(1.15) rotate(30deg); }
+  70%  { opacity: 0.8; transform: translate(var(--tx2), var(--ty2)) scale(0.9) rotate(90deg); }
+  100% { opacity: 0; transform: translate(var(--tx3), var(--ty3)) scale(0.35) rotate(180deg); }
+}
+
+/* ---------- Mood badge on response ---------- */
+.vibe-badge {
+  display: inline-block;
+  font-size: .58rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  border: 1px solid rgba(168, 152, 128, 0.3);
+  border-radius: 1rem;
+  padding: .18rem .65rem;
+  color: var(--ink-mute);
+  margin-bottom: 1rem;
+}
+
+/* ---------- Site footer ---------- */
+.site-footer {
+  text-align: center;
+  font-size: .68rem;
+  letter-spacing: .08em;
+  color: var(--ink-mute);
+  opacity: 0.45;
+}
+
+/* ---------- Utility ---------- */
+[hidden] { display: none !important; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+  .main-wrapper  { padding: 2.5rem 1rem 4rem; gap: 2rem; }
+  .response-card { padding: 1.75rem 1.25rem 1.5rem; }
+  .share-card-inner { padding: 1.75rem 1.25rem 1.5rem; }
+  .open-quote    { left: 0; }
+  .close-quote   { right: 0; }
+  .share-options { flex-direction: column; align-items: flex-start; }
+}

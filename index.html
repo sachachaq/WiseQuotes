@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WiseQuotes — Ask the Universe</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Ambient background layers -->
+  <div class="bg-layer bg-atmosphere" aria-hidden="true"></div>
+  <div class="bg-layer bg-nature" aria-hidden="true">
+    <div class="nature-el ne-1"></div>
+    <div class="nature-el ne-2"></div>
+    <div class="nature-el ne-3"></div>
+  </div>
+  <div class="bg-layer bg-texture" aria-hidden="true"></div>
+
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="logo-glyph" aria-hidden="true">✦</div>
+      <h1 class="site-title">WiseQuotes</h1>
+      <p class="site-tagline">The universe has been waiting to answer you.</p>
+    </header>
+
+    <!-- Input section -->
+    <section class="ask-section" aria-label="Ask a question">
+      <div class="input-shell">
+        <textarea
+          id="user-question"
+          class="question-input"
+          placeholder="What weighs on your mind today?"
+          rows="3"
+          maxlength="280"
+          aria-label="Your question"
+        ></textarea>
+        <span class="char-count" id="char-count">0 / 280</span>
+      </div>
+
+      <!-- Vibe slider -->
+      <div class="vibe-control" role="group" aria-label="Answer vibe">
+        <span class="vibe-label vibe-left">Serious</span>
+        <div class="slider-track">
+          <input
+            type="range"
+            id="vibe-slider"
+            class="vibe-slider"
+            min="0"
+            max="100"
+            value="50"
+            aria-label="Vibe level: 0 = Serious, 50 = Balanced, 100 = Kardashian"
+          />
+          <div class="slider-fill" id="slider-fill"></div>
+          <div class="slider-thumb-label" id="thumb-label">Balanced</div>
+        </div>
+        <span class="vibe-label vibe-right">Kardashian</span>
+      </div>
+
+      <div class="ask-row">
+        <button id="ask-btn" class="ask-btn" type="button">
+          <span class="ask-btn-inner">
+            <span class="ask-icon" aria-hidden="true">✦</span>
+            Ask the Universe
+          </span>
+          <span class="ask-btn-shimmer" aria-hidden="true"></span>
+        </button>
+        <button id="new-thought-btn" class="new-thought-btn" type="button" hidden>
+          New thought
+        </button>
+      </div>
+    </section>
+
+    <!-- Response section (hidden until revealed) -->
+    <section class="response-section" id="response-section" aria-live="polite" aria-label="Universe's response" hidden>
+
+      <div class="response-card" id="response-card">
+
+        <!-- User question echo -->
+        <div class="response-question" id="response-question-block">
+          <span class="response-question-label">You asked:</span>
+          <p class="response-question-text" id="response-question-text"></p>
+        </div>
+
+        <div class="divider-glyph" aria-hidden="true">· · ✦ · ·</div>
+
+        <!-- Pseudo-profound quote -->
+        <blockquote class="pseudo-quote" id="pseudo-quote">
+          <span class="quote-mark open-quote" aria-hidden="true">"</span>
+          <span class="pseudo-quote-text" id="pseudo-quote-text"></span>
+          <span class="quote-mark close-quote" aria-hidden="true">"</span>
+        </blockquote>
+
+        <div class="divider-line" aria-hidden="true"></div>
+
+        <!-- Philosopher excerpt -->
+        <div class="philosopher-block">
+          <blockquote class="philosopher-quote" id="philosopher-quote">
+            <p class="philosopher-excerpt" id="philosopher-excerpt"></p>
+          </blockquote>
+          <footer class="philosopher-meta">
+            <cite>
+              <span class="philosopher-name" id="philosopher-name"></span>
+              <span class="philosopher-source" id="philosopher-source"></span>
+            </cite>
+          </footer>
+        </div>
+
+        <!-- Actions row -->
+        <div class="response-actions">
+          <button id="another-btn" class="another-btn" type="button">
+            Another truth
+          </button>
+          <button id="share-toggle-btn" class="share-toggle-btn" type="button">
+            Share this wisdom
+          </button>
+        </div>
+      </div>
+
+      <!-- Share card (toggled) -->
+      <div class="share-card-wrapper" id="share-card-wrapper" hidden>
+        <div class="share-card" id="share-card">
+          <div class="share-card-inner">
+            <div class="share-card-logo">✦ WiseQuotes</div>
+
+            <div class="share-question-block" id="share-question-block">
+              <p class="share-question-text" id="share-question-text"></p>
+            </div>
+
+            <blockquote class="share-pseudo-quote" id="share-pseudo-quote-text"></blockquote>
+
+            <div class="share-divider" aria-hidden="true"></div>
+
+            <p class="share-philosopher-excerpt" id="share-philosopher-excerpt"></p>
+            <footer class="share-meta">
+              <span class="share-philosopher-name" id="share-philosopher-name"></span>
+              <span class="share-philosopher-source" id="share-philosopher-source-card"></span>
+            </footer>
+          </div>
+        </div>
+
+        <div class="share-options">
+          <label class="share-option-toggle">
+            <input type="checkbox" id="include-question-toggle" checked />
+            <span class="toggle-track" aria-hidden="true"></span>
+            Include my question
+          </label>
+          <div class="share-buttons">
+            <button class="share-btn share-copy" id="share-copy-btn" type="button">Copy card text</button>
+            <button class="share-btn share-twitter" id="share-twitter-btn" type="button">Share on X</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>All wisdom is approximate. Philosopher excerpts are illustrative.</p>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

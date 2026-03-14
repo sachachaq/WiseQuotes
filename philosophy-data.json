@@ -1,0 +1,248 @@
+{
+  "philosophers": [
+    {
+      "id": "marcus-aurelius",
+      "name": "Marcus Aurelius",
+      "era": "121–180 CE",
+      "school": "Stoicism",
+      "weight": 4,
+      "excerpts": [
+        {
+          "text": "You have power over your mind, not outside events. Realize this, and you will find strength.",
+          "source": "Meditations, Book IV"
+        },
+        {
+          "text": "The impediment to action advances action. What stands in the way becomes the way.",
+          "source": "Meditations, Book V"
+        },
+        {
+          "text": "Waste no more time arguing about what a good man should be. Be one.",
+          "source": "Meditations, Book X"
+        },
+        {
+          "text": "Loss is nothing else but change, and change is Nature's delight.",
+          "source": "Meditations, Book IX"
+        }
+      ]
+    },
+    {
+      "id": "socrates",
+      "name": "Socrates",
+      "era": "470–399 BCE",
+      "school": "Classical Greek Philosophy",
+      "weight": 4,
+      "excerpts": [
+        {
+          "text": "The unexamined life is not worth living.",
+          "source": "Apology (as recorded by Plato)"
+        },
+        {
+          "text": "I know that I am intelligent, because I know that I know nothing.",
+          "source": "Apology (as recorded by Plato)"
+        },
+        {
+          "text": "Wonder is the beginning of wisdom.",
+          "source": "Theaetetus (as recorded by Plato)"
+        }
+      ]
+    },
+    {
+      "id": "simone-de-beauvoir",
+      "name": "Simone de Beauvoir",
+      "era": "1908–1986",
+      "school": "Existentialism",
+      "weight": 1,
+      "excerpts": [
+        {
+          "text": "Change your life today. Don't gamble on the future, act now, without delay.",
+          "source": "The Ethics of Ambiguity"
+        },
+        {
+          "text": "In itself, homosexuality is as limiting as heterosexuality: the ideal should be to be capable of loving a woman or a man.",
+          "source": "Interview, 1984"
+        },
+        {
+          "text": "One is not born, but rather becomes, a woman.",
+          "source": "The Second Sex, Book II"
+        }
+      ]
+    },
+    {
+      "id": "nietzsche",
+      "name": "Friedrich Nietzsche",
+      "era": "1844–1900",
+      "school": "Existentialism / Nihilism",
+      "weight": 4,
+      "excerpts": [
+        {
+          "text": "That which does not kill us makes us stronger.",
+          "source": "Twilight of the Idols"
+        },
+        {
+          "text": "Without music, life would be a mistake.",
+          "source": "Twilight of the Idols"
+        },
+        {
+          "text": "He who has a why to live for can bear almost any how.",
+          "source": "Thus Spoke Zarathustra"
+        },
+        {
+          "text": "It is not a lack of love, but a lack of friendship that makes unhappy marriages.",
+          "source": "Human, All Too Human"
+        }
+      ]
+    },
+    {
+      "id": "lao-tzu",
+      "name": "Lao Tzu",
+      "era": "6th–4th century BCE",
+      "school": "Taoism",
+      "weight": 3,
+      "excerpts": [
+        {
+          "text": "Knowing others is intelligence; knowing yourself is true wisdom. Mastering others is strength; mastering yourself is true power.",
+          "source": "Tao Te Ching, Chapter 33"
+        },
+        {
+          "text": "A journey of a thousand miles begins with a single step.",
+          "source": "Tao Te Ching, Chapter 64"
+        },
+        {
+          "text": "Nature does not hurry, yet everything is accomplished.",
+          "source": "Tao Te Ching, Chapter 15"
+        }
+      ]
+    },
+    {
+      "id": "seneca",
+      "name": "Seneca",
+      "era": "4 BCE – 65 CE",
+      "school": "Stoicism",
+      "weight": 3,
+      "excerpts": [
+        {
+          "text": "We suffer more in imagination than in reality.",
+          "source": "Letters from a Stoic, Letter LXXXV"
+        },
+        {
+          "text": "Luck is what happens when preparation meets opportunity.",
+          "source": "Letters from a Stoic, Letter LXXXVII"
+        },
+        {
+          "text": "Begin at once to live, and count each separate day as a separate life.",
+          "source": "Letters from a Stoic, Letter I"
+        }
+      ]
+    },
+    {
+      "id": "hannah-arendt",
+      "name": "Hannah Arendt",
+      "era": "1906–1975",
+      "school": "Political Philosophy",
+      "weight": 1,
+      "excerpts": [
+        {
+          "text": "The smallest act in the most limited circumstances bears the seed of the same boundlessness, because one deed, and sometimes one word, suffices to change every constellation.",
+          "source": "The Human Condition"
+        },
+        {
+          "text": "Storytelling reveals meaning without committing the error of defining it.",
+          "source": "Men in Dark Times"
+        }
+      ]
+    },
+    {
+      "id": "alan-watts",
+      "name": "Alan Watts",
+      "era": "1915–1973",
+      "school": "Eastern Philosophy / Zen",
+      "weight": 1,
+      "excerpts": [
+        {
+          "text": "The meaning of life is just to be alive. It is so plain and so obvious and so simple. And yet everybody rushes around in a great panic as if it were necessary to achieve something beyond themselves.",
+          "source": "The Culture of Counter-Culture"
+        },
+        {
+          "text": "You are a function of what the whole universe is doing in the same way that a wave is a function of what the whole ocean is doing.",
+          "source": "The Book: On the Taboo Against Knowing Who You Are"
+        }
+      ]
+    },
+    {
+      "id": "epictetus",
+      "name": "Epictetus",
+      "era": "50–135 CE",
+      "school": "Stoicism",
+      "weight": 3,
+      "excerpts": [
+        {
+          "text": "It's not what happens to you, but how you react to it that matters.",
+          "source": "Enchiridion, Chapter 5"
+        },
+        {
+          "text": "Men are disturbed not by the things which happen, but by the opinions about the things.",
+          "source": "Enchiridion, Chapter 5"
+        },
+        {
+          "text": "First say to yourself what you would be; then do what you have to do.",
+          "source": "Discourses, Book III"
+        }
+      ]
+    },
+    {
+      "id": "simone-weil",
+      "name": "Simone Weil",
+      "era": "1909–1943",
+      "school": "Mystical Philosophy",
+      "weight": 1,
+      "excerpts": [
+        {
+          "text": "Attention is the rarest and purest form of generosity.",
+          "source": "First and Last Notebooks"
+        },
+        {
+          "text": "The love of our neighbour in all its fullness simply means being able to say to him: What are you going through?",
+          "source": "Waiting for God"
+        }
+      ]
+    }
+  ],
+  "pseudoProfoundTemplates": {
+    "serious": [
+      "The river does not fight the stone. The river becomes the stone's biography.",
+      "To seek the answer is already to have found the question. To find the question is to have misplaced your keys.",
+      "Silence speaks loudest in rooms where no one has listened.",
+      "The shadow you cast at noon is the you that noon refuses to acknowledge.",
+      "Every closed door is simply a wall that learned ambition.",
+      "The wound is not where the arrow landed, but where you were standing when it did.",
+      "We do not inherit the stars. We borrow them, briefly, and call it home.",
+      "What you resist does not persist — it simply waits in a different corridor of the self.",
+      "The tree does not apologize for the autumn. Neither should you.",
+      "To be lost is simply to be very, very present in a place no map has visited yet."
+    ],
+    "balanced": [
+      "The universe noticed your question and immediately scheduled a meeting with itself.",
+      "Growth is just confusion that decided to stay for breakfast.",
+      "You are both the gardener and the somewhat stubborn weed. Negotiations are ongoing.",
+      "The answer you're looking for is probably behind the thing you've been avoiding — right next to your charger.",
+      "Every sunrise is the universe's way of saying: alright, let's try this again.",
+      "You are simultaneously too hard and too soft on yourself. Somewhere in the middle, there is soup.",
+      "The path forward is clear, if you squint a little and ignore that other path.",
+      "The cosmos is sending you a sign. It's just stuck in traffic.",
+      "Progress is just past mistakes wearing better shoes.",
+      "You already know what to do. You're just hoping the universe will do it for you. Relatable."
+    ],
+    "kardashian": [
+      "OK so like, the universe is literally obsessed with you, it's just going through a lot right now? Which I totally get.",
+      "You are a vibe. A complicated, messy, beautiful vibe. And honestly? Same.",
+      "The thing about life is that it's like a filter — you have to find your best angle first.",
+      "I feel like the cosmos is giving you main character energy and you're just sitting there like a side character. Not on my watch.",
+      "Your authenticity is your superpower. That and good lighting. Never underestimate good lighting.",
+      "Sometimes you just have to take a break, get a fresh blowout, and realign with your truth. It's not shallow. It's self-care.",
+      "The universe was literally built for moments exactly like this one. I read that somewhere. Or maybe I said it.",
+      "Growth is uncomfortable. So is that cleanse I did last month. And honestly both were worth it.",
+      "You were not put on this earth to be average. You were put here to be iconic. There's a difference.",
+      "OK but seriously? The fact that you're even asking this question means you're already on the right path. That's so real."
+    ]
+  }
+}
