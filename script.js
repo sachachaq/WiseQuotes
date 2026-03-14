@@ -53,68 +53,189 @@ const DEEPITY_STOP_WORDS = new Set([
   'am','were','was','been','did','does','had','has','have'
 ]);
 
+// Conjugated verb forms not caught by the base stop-words above.
+// These must never be used as deepity topics — they produce broken sentences.
+const DEEPITY_VERB_FORMS = new Set([
+  // be
+  'being',
+  // do / does / doing
+  'doing','done',
+  // go
+  'goes','going','went','gone',
+  // get
+  'gets','getting','got','gotten',
+  // make
+  'makes','making','made',
+  // take
+  'takes','taking','took','taken',
+  // come
+  'comes','coming','came',
+  // say
+  'says','saying','said',
+  // see
+  'sees','seeing','seen','saw',
+  // think
+  'thinks','thinking','thought',
+  // feel
+  'feels','feeling','felt',
+  // know
+  'knows','knowing','knew','known',
+  // want
+  'wants','wanting','wanted',
+  // need
+  'needs','needing','needed',
+  // find
+  'finds','finding','found',
+  // keep
+  'keeps','keeping','kept',
+  // give
+  'gives','giving','gave','given',
+  // show
+  'shows','showing','showed','shown',
+  // try
+  'tries','trying','tried',
+  // ask
+  'asks','asking','asked',
+  // become
+  'becomes','becoming','became',
+  // leave
+  'leaves','leaving','left',
+  // start
+  'starts','starting','started',
+  // seem
+  'seems','seeming','seemed',
+  // put / let / run / turn / move / mean / happen / live / hold / bring / use
+  'puts','putting','lets','letting','runs','running','turns','turning',
+  'moves','moving','means','meaning','happens','happening',
+  'lives','living','holds','holding','brings','bringing',
+  'uses','using','used','pulls','pulling','sits','sitting',
+  'stands','standing','looks','looking','looked','looked',
+  'calls','calling','called','stays','staying','stayed',
+  'helps','helping','helped','works','working','worked',
+  'plays','playing','played','tells','telling','told',
+]);
+
+// ── Synonym map ───────────────────────────────────────────
+// Templates receive (t, s) where s is a synonym or conceptual equivalent.
+// This lets Identity Loop / Temporal Truth avoid awkward word repetition
+// while still producing a tautology ("A decision you make is a choice you chose.").
+const TOPIC_SYNONYMS = {
+  anxiety:     ['worry', 'unease', 'dread'],
+  anger:       ['frustration', 'fury', 'heat'],
+  beauty:      ['grace', 'wonder', 'loveliness'],
+  calm:        ['stillness', 'quiet', 'peace'],
+  change:      ['shift', 'transition', 'movement'],
+  chaos:       ['disorder', 'confusion', 'noise'],
+  choice:      ['decision', 'path', 'option'],
+  confusion:   ['uncertainty', 'doubt', 'fog'],
+  control:     ['grip', 'hold', 'power'],
+  death:       ['end', 'passing', 'departure'],
+  doubt:       ['uncertainty', 'hesitation', 'questioning'],
+  dream:       ['vision', 'hope', 'longing'],
+  failure:     ['loss', 'setback', 'stumble'],
+  faith:       ['belief', 'trust', 'conviction'],
+  fear:        ['dread', 'worry', 'unease'],
+  freedom:     ['openness', 'space', 'release'],
+  grief:       ['loss', 'sorrow', 'sadness'],
+  growth:      ['change', 'becoming', 'expansion'],
+  guilt:       ['regret', 'weight', 'burden'],
+  happiness:   ['joy', 'delight', 'lightness'],
+  health:      ['wellness', 'wholeness', 'vitality'],
+  hope:        ['possibility', 'expectation', 'light'],
+  identity:    ['self', 'who you are', 'being'],
+  joy:         ['happiness', 'delight', 'gladness'],
+  loneliness:  ['solitude', 'aloneness', 'quiet'],
+  loss:        ['absence', 'grief', 'what was'],
+  love:        ['affection', 'warmth', 'devotion'],
+  meaning:     ['purpose', 'significance', 'the why'],
+  pain:        ['hurt', 'ache', 'suffering'],
+  patience:    ['stillness', 'calm', 'waiting'],
+  peace:       ['calm', 'stillness', 'quiet'],
+  power:       ['strength', 'force', 'will'],
+  purpose:     ['meaning', 'direction', 'the why'],
+  regret:      ['looking back', 'hindsight', 'what was'],
+  shame:       ['guilt', 'burden', 'weight'],
+  stress:      ['pressure', 'tension', 'weight'],
+  success:     ['achievement', 'arrival', 'getting there'],
+  trust:       ['faith', 'belief', 'reliance'],
+  truth:       ['reality', 'what is', 'fact'],
+  uncertainty: ['doubt', 'not knowing', 'openness'],
+  weather:     ['the sky', 'the elements', 'conditions'],
+  work:        ['effort', 'labor', 'what you do'],
+};
+
+function getSynonym(topic) {
+  const syns = TOPIC_SYNONYMS[topic];
+  return (syns && syns.length) ? rand(syns) : topic;
+}
+
 // ── Structure 1: Identity Loop ────────────────────────────
+// Pattern: subject = itself reframed.
 // "The road you take is the road you're on."
-// Same noun twice, different verb or state. No synonyms standing in for the loop.
+// "A decision you make is a choice you chose."
+// t = topic noun; s = synonym (may equal t if no synonym exists)
 const IDENTITY_LOOP_TEMPLATES = [
-  t => `The ${t} you have is the ${t} you're living.`,
-  t => `The ${t} you choose is the ${t} you're choosing.`,
-  t => `Your ${t} is the ${t} that belongs to you.`,
-  t => `The ${t} you carry is the ${t} you're holding.`,
-  t => `The ${t} in front of you is the ${t} you're facing.`,
-  t => `The ${t} that found you is the ${t} you've got.`,
-  t => `The ${t} you feel is what feeling ${t} feels like.`,
-  t => `The ${t} you left is the ${t} you moved past.`,
-  t => `The ${t} you're inside is the ${t} you're in.`,
-  t => `The ${t} you keep is the ${t} you didn't let go.`,
+  (t, s) => `The ${t} you have is the ${s} that's yours.`,
+  (t, s) => `The ${t} you carry is the ${s} that's with you.`,
+  (t, s) => `Your ${t} is the ${s} that belongs to you.`,
+  (t, s) => `The ${t} in front of you is the ${s} you're facing.`,
+  (t, s) => `The ${t} you chose is the ${s} you decided on.`,
+  (t, s) => `The ${t} that's with you is the ${s} you've got.`,
+  (t, s) => `The ${t} you're inside is the ${s} you're in.`,
+  (t, s) => `The ${t} you hold onto is the ${s} you haven't let go of.`,
+  (t, s) => `A ${t} you walk into is a ${s} you're standing in.`,
+  (t, s) => `The ${t} you moved past is the ${s} that's behind you now.`,
 ];
 
 // ── Structure 2: Conditional Deepity ─────────────────────
+// Pattern: if X then X already is.
 // "If something happens, then it occurred."
-// Two clauses. Second restates the first with a synonym or logical equivalent.
+// Only t is used; s is accepted but ignored so the signature stays consistent.
 const CONDITIONAL_DEEPITY_TEMPLATES = [
-  t => `If ${t} is real, then it exists.`,
-  t => `Once ${t} arrives, you're no longer without it.`,
-  t => `When ${t} changes you, you are no longer unchanged.`,
-  t => `If ${t} happened, then it has occurred.`,
-  t => `Once ${t} begins, it has started.`,
-  t => `If ${t} is present, you're already inside it.`,
-  t => `When ${t} ends, it's over.`,
-  t => `If ${t} shaped you, the shaping is done.`,
-  t => `Once ${t} passes, it has gone by.`,
-  t => `When ${t} is gone, it's no longer here.`,
+  (t) => `If ${t} is real, then it exists.`,
+  (t) => `Once ${t} arrives, you're no longer without it.`,
+  (t) => `When ${t} changes you, you are no longer unchanged.`,
+  (t) => `If ${t} happened, then it has occurred.`,
+  (t) => `Once ${t} begins, the start has already happened.`,
+  (t) => `If ${t} is present, you're already inside it.`,
+  (t) => `When ${t} is over, it's no longer continuing.`,
+  (t) => `If ${t} touched you, the touching is done.`,
+  (t) => `Once ${t} passes, the passing is behind you.`,
+  (t) => `When ${t} is gone, it's no longer here.`,
 ];
 
 // ── Structure 3: Perspective Loop ────────────────────────
+// Pattern: understanding something means you already changed by it.
 // "When you learn something new, you know more than before."
-// Action leads to a state that is just the natural consequence of that action.
+// "When you look forward, you're looking ahead."
 const PERSPECTIVE_LOOP_TEMPLATES = [
-  t => `When you find ${t}, you stop searching for it.`,
-  t => `The more you understand ${t}, the less of it remains unknown.`,
-  t => `When you survive ${t}, you become someone who survived it.`,
-  t => `The deeper into ${t} you go, the further from the outside you are.`,
-  t => `When ${t} makes sense, you're past the part where it didn't.`,
-  t => `After ${t}, you know more about it than you did before.`,
-  t => `The more ${t} you've had, the more ${t} you've been through.`,
-  t => `Once ${t} is behind you, you're in front of it.`,
-  t => `When you face ${t}, you know it better than before you faced it.`,
-  t => `The longer you carry ${t}, the longer you've been carrying it.`,
+  (t, s) => `When you find ${t}, you stop looking for it.`,
+  (t, s) => `The more ${t} you understand, the less of it stays unknown.`,
+  (t, s) => `When you've been through ${t}, you know what ${s} feels like.`,
+  (t, s) => `The deeper into ${t} you go, the further from outside it you are.`,
+  (t, s) => `After ${t}, you understand it better than you did before.`,
+  (t, s) => `When you face ${t}, it becomes something you've faced.`,
+  (t, s) => `Once ${t} is behind you, you're in front of it.`,
+  (t, s) => `The more ${t} you've had, the more ${s} you've been through.`,
+  (t, s) => `When ${t} starts to make sense, it's already begun to.`,
+  (t, s) => `Every time you move through ${t}, you become someone who did.`,
 ];
 
 // ── Structure 4: Temporal Truth ───────────────────────────
+// Pattern: time passing simply means the moment moved forward.
 // "The future is what comes after now."
-// Time-based tautology. The definition of the thing is just the thing restated.
+// "When time passes, the moment moves on."
 const TEMPORAL_TRUTH_TEMPLATES = [
-  t => `The ${t} ahead is what hasn't arrived yet.`,
-  t => `Past ${t} is just ${t} that already happened.`,
-  t => `Future ${t} is the ${t} that hasn't started yet.`,
-  t => `Every ${t} that's over is a ${t} that ended.`,
-  t => `The ${t} behind you is the one that already passed.`,
-  t => `Right now, your ${t} is exactly where it is.`,
-  t => `The ${t} still coming is the part that hasn't come yet.`,
-  t => `Yesterday's ${t} is the ${t} that came before today's.`,
-  t => `The ${t} you're waiting for is still on its way.`,
-  t => `${cap(t)} began when it started, and ends when there's no more of it.`,
+  (t, s) => `The ${t} ahead is what hasn't reached you yet.`,
+  (t, s) => `${cap(t)} that already happened is ${s} that's in the past now.`,
+  (t, s) => `Every ${t} that ends is a ${s} that finished.`,
+  (t, s) => `The ${t} behind you is the ${s} that already passed.`,
+  (t, s) => `Right now, your ${t} is exactly where it is.`,
+  (t, s) => `The ${t} still coming is the ${s} that hasn't arrived yet.`,
+  (t, s) => `Yesterday's ${t} is the ${s} that came before today's.`,
+  (t, s) => `The ${t} you're waiting for hasn't come yet.`,
+  (t, s) => `${cap(t)} begins when it starts, and ends when it's done.`,
+  (t, s) => `Future ${t} is the ${s} that hasn't happened yet.`,
 ];
 
 // Nouns/emotions/concepts that carry strong meaning — bump their priority
@@ -131,10 +252,10 @@ function extractTopics(text) {
   const words = text.toLowerCase()
     .replace(/[^a-z\s]/g, ' ')
     .split(/\s+/)
-    .filter(w => w.length >= 4 && !DEEPITY_STOP_WORDS.has(w));
+    .filter(w => w.length >= 4 && !DEEPITY_STOP_WORDS.has(w) && !DEEPITY_VERB_FORMS.has(w));
   if (!words.length) return [];
 
-  // Score: known meaningful words score 3, longer words score their length
+  // Score: known meaningful words score 3, longer words score by length
   words.sort((a, b) => {
     const scoreA = (MEANINGFUL_WORD_HINTS.has(a) ? 3 : 0) + a.length * 0.1;
     const scoreB = (MEANINGFUL_WORD_HINTS.has(b) ? 3 : 0) + b.length * 0.1;
@@ -155,8 +276,9 @@ const ALL_DEEPITY_TEMPLATES = [
 function generateBlendedDeepity() {
   const topics = extractTopics(questionInput.value.trim());
   if (topics.length) {
-    const topic = rand(topics); // pick randomly from top 2–3 meaningful words
-    return rand(ALL_DEEPITY_TEMPLATES)(topic);
+    const topic = rand(topics);
+    const synonym = getSynonym(topic);
+    return rand(ALL_DEEPITY_TEMPLATES)(topic, synonym);
   }
   const fallback = [
     ...philosophyData.pseudoProfoundTemplates.balanced,
