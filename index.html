@@ -16,6 +16,12 @@
     <div class="nature-el ne-2"></div>
     <div class="nature-el ne-3"></div>
   </div>
+  <div class="bg-layer bg-shimmer" aria-hidden="true"></div>
+  <div class="bg-layer bg-ripple" aria-hidden="true">
+    <div class="ripple-ring r1"></div>
+    <div class="ripple-ring r2"></div>
+    <div class="ripple-ring r3"></div>
+  </div>
   <div class="bg-layer bg-texture" aria-hidden="true"></div>
 
   <main class="main-wrapper">
@@ -42,9 +48,9 @@
       </div>
 
       <!-- Vibe slider -->
-      <div class="vibe-control" role="group" aria-label="Answer vibe">
+      <div class="vibe-control" id="vibe-control" data-mode="balanced" role="group" aria-label="Answer vibe">
         <span class="vibe-label vibe-left">Serious</span>
-        <div class="slider-track">
+        <div class="slider-track" id="slider-track-el">
           <input
             type="range"
             id="vibe-slider"
@@ -55,7 +61,29 @@
             aria-label="Vibe level: 0 = Serious, 50 = Balanced, 100 = Kardashian"
           />
           <div class="slider-fill" id="slider-fill"></div>
-          <div class="slider-thumb-label" id="thumb-label">Balanced</div>
+          <!-- Bird marker -->
+          <div class="vibe-bird" id="vibe-bird" aria-hidden="true">
+            <svg class="bird-svg" viewBox="0 0 56 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Body -->
+              <path class="bd-body" d="M 7 24 C 9 15 22 13 30 18 C 28 26 17 31 7 24 Z"/>
+              <!-- Head -->
+              <path class="bd-head" d="M 28 18 C 29 10 37 9 38 14 C 39 19 33 23 29 20 Z"/>
+              <!-- Beak -->
+              <path class="bd-beak" d="M 37 12 L 46 11"/>
+              <!-- Eye -->
+              <circle class="bd-eye" cx="34" cy="13" r="1.6"/>
+              <!-- Tail — upper prong -->
+              <path class="bd-tail" d="M 7 24 C 3 18 1 13 3 9"/>
+              <!-- Tail — lower prong -->
+              <path class="bd-tail" d="M 8 25 C 3 28 1 33 3 38"/>
+              <!-- Wing (animated) -->
+              <path class="bd-wing" d="M 14 22 C 17 14 25 12 29 16"/>
+              <!-- Left foot -->
+              <path class="bd-feet" d="M 17 30 L 14 40 M 17 30 L 19 40"/>
+              <!-- Right foot -->
+              <path class="bd-feet" d="M 23 32 L 20 40 M 23 32 L 24 40 M 23 32 L 26 38"/>
+            </svg>
+          </div>
         </div>
         <span class="vibe-label vibe-right">Kardashian</span>
       </div>

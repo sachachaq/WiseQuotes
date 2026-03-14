@@ -6,16 +6,18 @@
 
 /* ---------- State ---------- */
 let philosophyData = null;
-let currentResult = null;   // { pseudo, philosopher, excerpt, source, vibe }
+let currentResult = null;
 let currentMood   = null;
 let moodDebounce  = null;
+let flutterTimer  = null;
 
 /* ---------- DOM refs ---------- */
 const questionInput        = document.getElementById('user-question');
 const charCount            = document.getElementById('char-count');
 const vibeSlider           = document.getElementById('vibe-slider');
+const vibeControl          = document.getElementById('vibe-control');
 const sliderFill           = document.getElementById('slider-fill');
-const thumbLabel           = document.getElementById('thumb-label');
+const vibeBird             = document.getElementById('vibe-bird');
 const askBtn               = document.getElementById('ask-btn');
 const responseSection      = document.getElementById('response-section');
 const responseCard         = document.getElementById('response-card');
@@ -58,11 +60,30 @@ function getVibeLabel(value) {
 }
 
 function updateSliderUI(value) {
-  const pct = value + '%';
-  sliderFill.style.width = pct;
-  thumbLabel.textContent = getVibeLabel(value);
-  // Position the thumb label above the thumb
-  thumbLabel.style.left = pct;
+  sliderFill.style.width = value + '%';
+  updateBird(value);
+}
+
+function updateBird(value) {
+  if (!vibeBird) return;
+
+  // Horizontal position along the track
+  vibeBird.style.left = value + '%';
+
+  // Determine mode
+  const mode = value < 34 ? 'serious' : value < 67 ? 'balanced' : 'kardasian';
+  const prev = vibeControl.dataset.mode;
+  vibeControl.dataset.mode = mode;
+
+  // Wing flutter only when entering or moving within kardasian zone
+  if (mode === 'kardasian') {
+    vibeControl.classList.add('is-moving');
+    clearTimeout(flutterTimer);
+    flutterTimer = setTimeout(() => vibeControl.classList.remove('is-moving'), 620);
+  } else if (prev === 'kardasian') {
+    // Clean up if leaving kardasian
+    vibeControl.classList.remove('is-moving');
+  }
 }
 
 function weightedRand(philosophers) {
@@ -437,8 +458,9 @@ newThoughtBtn.addEventListener('click', () => {
   shareCardWrapper.hidden = true;
   shareToggleBtn.textContent = 'Share this wisdom';
 
-  // Reset slider
+  // Reset slider and bird
   vibeSlider.value = 50;
+  vibeControl.classList.remove('is-moving');
   updateSliderUI(50);
 
   // Reset mood
