@@ -55,62 +55,66 @@ const DEEPITY_STOP_WORDS = new Set([
 
 // ── Structure 1: Identity Loop ────────────────────────────
 // "The road you take is the road you're on."
+// Same noun twice, different verb or state. No synonyms standing in for the loop.
 const IDENTITY_LOOP_TEMPLATES = [
-  t => `The ${t} you choose is the choice you're making.`,
-  t => `The path through ${t} is the ${t} path.`,
-  t => `${cap(t)} is what you're dealing with when you're dealing with ${t}.`,
-  t => `The version of ${t} that finds you is your ${t}.`,
-  t => `Whatever ${t} looks like for you is exactly what your ${t} looks like.`,
-  t => `The weight of ${t} is just ${t}, fully felt.`,
-  t => `Where ${t} leads is where you go when you follow it.`,
-  t => `The ${t} you carry is yours until it isn't.`,
-  t => `${cap(t)} becomes clearer once you see it for what it is.`,
-  t => `The shape of your ${t} is the ${t} you've been living.`,
+  t => `The ${t} you have is the ${t} you're living.`,
+  t => `The ${t} you choose is the ${t} you're choosing.`,
+  t => `Your ${t} is the ${t} that belongs to you.`,
+  t => `The ${t} you carry is the ${t} you're holding.`,
+  t => `The ${t} in front of you is the ${t} you're facing.`,
+  t => `The ${t} that found you is the ${t} you've got.`,
+  t => `The ${t} you feel is what feeling ${t} feels like.`,
+  t => `The ${t} you left is the ${t} you moved past.`,
+  t => `The ${t} you're inside is the ${t} you're in.`,
+  t => `The ${t} you keep is the ${t} you didn't let go.`,
 ];
 
 // ── Structure 2: Conditional Deepity ─────────────────────
 // "If something happens, then it occurred."
+// Two clauses. Second restates the first with a synonym or logical equivalent.
 const CONDITIONAL_DEEPITY_TEMPLATES = [
-  t => `If ${t} is present, then you are already in it.`,
+  t => `If ${t} is real, then it exists.`,
   t => `Once ${t} arrives, you're no longer without it.`,
-  t => `When ${t} changes you, the person it changed is you.`,
-  t => `If you've been through ${t}, then ${t} is part of what you've been through.`,
-  t => `When ${t} is real, everything it touches becomes real too.`,
-  t => `Once you notice ${t}, the noticing is already done.`,
-  t => `If ${t} feels heavy, that's the weight being felt.`,
-  t => `When you move past ${t}, you are someone who moved past it.`,
-  t => `If ${t} shaped you, the shape is already yours.`,
-  t => `Once ${t} begins, the beginning has happened.`,
+  t => `When ${t} changes you, you are no longer unchanged.`,
+  t => `If ${t} happened, then it has occurred.`,
+  t => `Once ${t} begins, it has started.`,
+  t => `If ${t} is present, you're already inside it.`,
+  t => `When ${t} ends, it's over.`,
+  t => `If ${t} shaped you, the shaping is done.`,
+  t => `Once ${t} passes, it has gone by.`,
+  t => `When ${t} is gone, it's no longer here.`,
 ];
 
 // ── Structure 3: Perspective Loop ────────────────────────
 // "When you learn something new, you know more than before."
+// Action leads to a state that is just the natural consequence of that action.
 const PERSPECTIVE_LOOP_TEMPLATES = [
-  t => `When you understand ${t}, you know more than you did before ${t}.`,
-  t => `Seeing ${t} clearly means your view of it has shifted.`,
-  t => `The more you sit with ${t}, the more ${t} has been sat with.`,
-  t => `When ${t} teaches you something, you leave it wiser than you entered.`,
-  t => `Once ${t} opens your eyes, those eyes can't close again.`,
-  t => `The further you go into ${t}, the less you're on the outside of it.`,
-  t => `When ${t} makes sense, the confusion was already on its way out.`,
-  t => `Looking back at ${t}, you see it from somewhere ${t} couldn't reach.`,
-  t => `After ${t}, you're always someone who has been through ${t}.`,
-  t => `When you grow from ${t}, the growth is the distance between who you were and who you are.`,
+  t => `When you find ${t}, you stop searching for it.`,
+  t => `The more you understand ${t}, the less of it remains unknown.`,
+  t => `When you survive ${t}, you become someone who survived it.`,
+  t => `The deeper into ${t} you go, the further from the outside you are.`,
+  t => `When ${t} makes sense, you're past the part where it didn't.`,
+  t => `After ${t}, you know more about it than you did before.`,
+  t => `The more ${t} you've had, the more ${t} you've been through.`,
+  t => `Once ${t} is behind you, you're in front of it.`,
+  t => `When you face ${t}, you know it better than before you faced it.`,
+  t => `The longer you carry ${t}, the longer you've been carrying it.`,
 ];
 
 // ── Structure 4: Temporal Truth ───────────────────────────
 // "The future is what comes after now."
+// Time-based tautology. The definition of the thing is just the thing restated.
 const TEMPORAL_TRUTH_TEMPLATES = [
-  t => `${cap(t)} is what it was before it became what it is.`,
-  t => `Before ${t} was this, it was nothing yet. Now it is everything it became.`,
-  t => `The ${t} ahead of you is still the ${t} you haven't reached.`,
-  t => `Right now, ${t} is exactly as far along as it has gotten.`,
-  t => `The moment ${t} passed, it became the ${t} that already happened.`,
-  t => `${cap(t)} now is just ${t} catching up with where it was always going.`,
-  t => `What comes after ${t} is whatever hasn't arrived yet.`,
-  t => `The present ${t} is simply all the past ${t} arriving at once.`,
+  t => `The ${t} ahead is what hasn't arrived yet.`,
+  t => `Past ${t} is just ${t} that already happened.`,
+  t => `Future ${t} is the ${t} that hasn't started yet.`,
+  t => `Every ${t} that's over is a ${t} that ended.`,
+  t => `The ${t} behind you is the one that already passed.`,
+  t => `Right now, your ${t} is exactly where it is.`,
+  t => `The ${t} still coming is the part that hasn't come yet.`,
+  t => `Yesterday's ${t} is the ${t} that came before today's.`,
+  t => `The ${t} you're waiting for is still on its way.`,
   t => `${cap(t)} began when it started, and ends when there's no more of it.`,
-  t => `Every stage of ${t} is just the next one waiting to be where the last one was.`,
 ];
 
 function extractTopic(text) {
