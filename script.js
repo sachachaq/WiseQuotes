@@ -53,59 +53,64 @@ const DEEPITY_STOP_WORDS = new Set([
   'am','were','was','been','did','does','had','has','have'
 ]);
 
-const DEEPITY_TEMPLATES = [
-  t => `The ${t} you have is the ${t} you're dealing with right now.`,
-  t => `When ${t} is happening, what is happening is ${t}. And that's just what ${t} does.`,
-  t => `The thing about ${t} is that ${t} is the thing. And knowing that is knowing the thing about ${t}.`,
-  t => `You can't get through ${t} without going through ${t}. That's what makes it ${t}.`,
-  t => `${cap(t)} changes you, and when it does, you are changed by ${t}.`,
-  t => `When ${t} is in your life, your life has ${t} in it. And that's honestly a lot.`,
-  t => `The ${t} you're carrying is the weight of ${t}. And carrying ${t} means ${t} is being carried.`,
-  t => `${cap(t)} is hard because ${t} is hard. And hard things, like ${t}, are hard.`,
-  t => `What you're going through with ${t} is the part of ${t} you're currently going through.`,
-  t => `The version of ${t} you have is your version of ${t}, which is yours.`,
-  t => `I've thought a lot about ${t}, and I always come back to: ${t} is the ${t} you're living.`,
-  t => `Before there was ${t} in your life, there wasn't ${t}. Now there is. That's growth.`,
-  t => `Every part of ${t} is a part of the whole ${t}. And the whole thing is all of the ${t}.`,
-  t => `${cap(t)} happened, which means ${t} has occurred. And when ${t} occurs, it's already happened.`,
-  t => `The ${t} in your situation is really the situation of your ${t}. Which is still ${t}.`,
-  t => `You're not just experiencing ${t} — you're having a full ${t} experience. That's what ${t} is.`,
-  t => `${cap(t)} is a journey, and every journey has ${t} in it, because the journey is the ${t}.`,
-  t => `At the end of the day, ${t} is at the end of the day. And that's where ${t} lives.`,
+// ── Structure 1: Identity Loop ────────────────────────────
+// "The road you take is the road you're on."
+const IDENTITY_LOOP_TEMPLATES = [
+  t => `The ${t} you choose is the choice you're making.`,
+  t => `The path through ${t} is the ${t} path.`,
+  t => `${cap(t)} is what you're dealing with when you're dealing with ${t}.`,
+  t => `The version of ${t} that finds you is your ${t}.`,
+  t => `Whatever ${t} looks like for you is exactly what your ${t} looks like.`,
+  t => `The weight of ${t} is just ${t}, fully felt.`,
+  t => `Where ${t} leads is where you go when you follow it.`,
+  t => `The ${t} you carry is yours until it isn't.`,
+  t => `${cap(t)} becomes clearer once you see it for what it is.`,
+  t => `The shape of your ${t} is the ${t} you've been living.`,
 ];
 
-const REFLECTIVE_TEMPLATES = [
-  t => `Strange, how ${t} keeps arriving exactly where it started.`,
-  t => `The ${t} you're describing sounds a lot like more ${t}.`,
-  t => `Funny — ${t} tends to show up right when you're already dealing with ${t}.`,
-  t => `The ${t} question is really just a ${t}-shaped answer in disguise.`,
-  t => `There's something about ${t} that only makes sense while you're still inside it.`,
-  t => `${cap(t)} always arrives carrying more ${t}.`,
-  t => `You're not confused about ${t}. You understand it perfectly. That's the problem.`,
-  t => `The ${t} was already there before you noticed it. That's what ${t} does.`,
-  t => `Looking for a way out of ${t} is its own kind of ${t}.`,
-  t => `${cap(t)} is exactly as complicated as the time you've spent thinking about ${t}.`,
-  t => `You already know what the ${t} is doing. The ${t} knows too.`,
-  t => `The answer to ${t} keeps asking you the same question back.`,
+// ── Structure 2: Conditional Deepity ─────────────────────
+// "If something happens, then it occurred."
+const CONDITIONAL_DEEPITY_TEMPLATES = [
+  t => `If ${t} is present, then you are already in it.`,
+  t => `Once ${t} arrives, you're no longer without it.`,
+  t => `When ${t} changes you, the person it changed is you.`,
+  t => `If you've been through ${t}, then ${t} is part of what you've been through.`,
+  t => `When ${t} is real, everything it touches becomes real too.`,
+  t => `Once you notice ${t}, the noticing is already done.`,
+  t => `If ${t} feels heavy, that's the weight being felt.`,
+  t => `When you move past ${t}, you are someone who moved past it.`,
+  t => `If ${t} shaped you, the shape is already yours.`,
+  t => `Once ${t} begins, the beginning has happened.`,
 ];
 
-const EXTREME_DEEPITY_TEMPLATES = [
-  t => `${cap(t)} is, was, and will be ${t}. That's the entire timeline of ${t}.`,
-  t => `The ${t} journey begins with ${t}, continues through ${t}, and ultimately arrives at more ${t}.`,
-  t => `Some people experience ${t}. Others experience it differently. But all of them are experiencing their version of ${t}, which is ${t}.`,
-  t => `${cap(t)} comes for everyone. Even people who don't have ${t} are just people who haven't had their ${t} yet.`,
-  t => `I looked into ${t}, and what I found was: ${t} was already there, looking back.`,
-  t => `${cap(t)} is just ${t} with the volume turned all the way up. And honestly? That's a lot of ${t}.`,
-  t => `The universe sent me ${t} so I could understand ${t}. And now that I understand ${t}, I understand why the universe sent me ${t}.`,
-  t => `Before ${t}, there was no ${t}. After ${t}, there is just the memory of ${t}. During ${t}, there is only ${t}.`,
-  t => `${cap(t)} asked me what it was. I told it: you are ${t}. And then ${t} understood itself.`,
-  t => `Some say ${t} changes you. I say you change, and call it ${t}. Either way, ${t}.`,
-  t => `The hardest part of ${t} is that it's not the easy part. The easy part is after all the hard parts of ${t}.`,
-  t => `${cap(t)} lives inside ${t}. Inside that ${t} is more ${t}. It's ${t} all the way down, babe.`,
-  t => `What is ${t}? At its core, ${t} is the most ${t} thing about ${t}. I stand by this.`,
-  t => `They say you can't rush ${t}. But also, if you wait too long, ${t} has already happened without you. So: medium speed on the ${t}.`,
-  t => `You + ${t} = someone who is you, with ${t}. And that math? That math is real.`,
-  t => `${cap(t)} is what happens when ${t} meets more ${t} under the right conditions. Which is any conditions, because ${t}.`,
+// ── Structure 3: Perspective Loop ────────────────────────
+// "When you learn something new, you know more than before."
+const PERSPECTIVE_LOOP_TEMPLATES = [
+  t => `When you understand ${t}, you know more than you did before ${t}.`,
+  t => `Seeing ${t} clearly means your view of it has shifted.`,
+  t => `The more you sit with ${t}, the more ${t} has been sat with.`,
+  t => `When ${t} teaches you something, you leave it wiser than you entered.`,
+  t => `Once ${t} opens your eyes, those eyes can't close again.`,
+  t => `The further you go into ${t}, the less you're on the outside of it.`,
+  t => `When ${t} makes sense, the confusion was already on its way out.`,
+  t => `Looking back at ${t}, you see it from somewhere ${t} couldn't reach.`,
+  t => `After ${t}, you're always someone who has been through ${t}.`,
+  t => `When you grow from ${t}, the growth is the distance between who you were and who you are.`,
+];
+
+// ── Structure 4: Temporal Truth ───────────────────────────
+// "The future is what comes after now."
+const TEMPORAL_TRUTH_TEMPLATES = [
+  t => `${cap(t)} is what it was before it became what it is.`,
+  t => `Before ${t} was this, it was nothing yet. Now it is everything it became.`,
+  t => `The ${t} ahead of you is still the ${t} you haven't reached.`,
+  t => `Right now, ${t} is exactly as far along as it has gotten.`,
+  t => `The moment ${t} passed, it became the ${t} that already happened.`,
+  t => `${cap(t)} now is just ${t} catching up with where it was always going.`,
+  t => `What comes after ${t} is whatever hasn't arrived yet.`,
+  t => `The present ${t} is simply all the past ${t} arriving at once.`,
+  t => `${cap(t)} began when it started, and ends when there's no more of it.`,
+  t => `Every stage of ${t} is just the next one waiting to be where the last one was.`,
 ];
 
 function extractTopic(text) {
@@ -121,9 +126,10 @@ function extractTopic(text) {
 }
 
 const ALL_DEEPITY_TEMPLATES = [
-  ...REFLECTIVE_TEMPLATES,
-  ...DEEPITY_TEMPLATES,
-  ...EXTREME_DEEPITY_TEMPLATES,
+  ...IDENTITY_LOOP_TEMPLATES,
+  ...CONDITIONAL_DEEPITY_TEMPLATES,
+  ...PERSPECTIVE_LOOP_TEMPLATES,
+  ...TEMPORAL_TRUTH_TEMPLATES,
 ];
 
 function generateBlendedDeepity() {
@@ -201,15 +207,17 @@ function pickExcerpt(excerpts, keywords) {
 
 function pick() {
   const philosophers = philosophyData.philosophers;
-  const keywords = extractInputKeywords(questionInput.value.trim());
+  const inputKeywords = extractInputKeywords(questionInput.value.trim());
 
   const pseudo = generateBlendedDeepity();
 
-  // Pick philosopher weighted by thematic relevance to user input
-  const philosopher = pickPhilosopher(philosophers, keywords);
+  // Combine user input keywords with keywords extracted from the deepity itself
+  // so the philosopher relates to the same idea the deepity expresses
+  const deepityKeywords = extractInputKeywords(pseudo);
+  const combinedKeywords = new Set([...inputKeywords, ...deepityKeywords]);
 
-  // Pick the most relevant excerpt from that philosopher
-  const excerptObj = pickExcerpt(philosopher.excerpts, keywords);
+  const philosopher = pickPhilosopher(philosophers, combinedKeywords);
+  const excerptObj  = pickExcerpt(philosopher.excerpts, combinedKeywords);
 
   return {
     pseudo,
