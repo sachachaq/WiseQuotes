@@ -488,6 +488,7 @@ async function handleAsk() {
     applyMood(detectEmotion(question));
 
     currentResult = pick();
+    currentResult.question = question;
 
     // Reset card state before re-animating
     responseCard.classList.remove('revealed');
@@ -535,20 +536,29 @@ function drawWrappedText(ctx, font, lines, x, y, lineHeight, fillStyle) {
 
 function drawShareCanvas(result) {
   const W = 880, PAD = 72, INNER = W - PAD * 2;
-  const QUOTE_FONT   = 'italic 300 24px Georgia, serif';
-  const EXCERPT_FONT = 'italic 300 16px Georgia, serif';
-  const QUOTE_LH = 38, EXCERPT_LH = 28;
+  const QUESTION_FONT = 'italic 300 17px Georgia, serif';
+  const QUOTE_FONT    = 'italic 300 24px Georgia, serif';
+  const EXCERPT_FONT  = 'italic 300 16px Georgia, serif';
+  const QUESTION_LH = 28, QUOTE_LH = 38, EXCERPT_LH = 28;
 
   // Measure pass (no drawing)
   const tmp = document.createElement('canvas');
   tmp.width = W; tmp.height = 10;
   const tctx = tmp.getContext('2d');
   tctx.textAlign = 'center';
-  const quoteLines   = wrapTextLines(tctx, QUOTE_FONT,   result.pseudo,   INNER - 20);
-  const excerptLines = wrapTextLines(tctx, EXCERPT_FONT, result.excerpt,  INNER);
+  const questionLines = result.question
+    ? wrapTextLines(tctx, QUESTION_FONT, result.question, INNER - 40)
+    : [];
+  const quoteLines   = wrapTextLines(tctx, QUOTE_FONT,   result.pseudo,  INNER - 20);
+  const excerptLines = wrapTextLines(tctx, EXCERPT_FONT, result.excerpt, INNER);
+
+  const questionBlock = questionLines.length
+    ? questionLines.length * QUESTION_LH + 52 // label + text + gap below
+    : 0;
 
   const H = (
     184
+    + questionBlock
     + quoteLines.length   * QUOTE_LH
     + 85  // close-quote + divider + philosopher label + gaps
     + excerptLines.length * EXCERPT_LH
@@ -581,13 +591,31 @@ function drawShareCanvas(result) {
 
   // Site name
   ctx.font = '300 11px sans-serif';
-  ctx.fillStyle = '#8a7e70';
+  ctx.fillStyle = '#6b5f52';
   ctx.fillText('V E R Y   W I S E   Q U O T E S', W / 2, cy);
   cy += 36;
 
+  // User's original thought
+  if (questionLines.length) {
+    ctx.font = '300 10px sans-serif';
+    ctx.fillStyle = 'rgba(107,95,82,0.6)';
+    ctx.fillText('Y O U   A S K E D', W / 2, cy);
+    cy += 20;
+    drawWrappedText(ctx, QUESTION_FONT, questionLines, W / 2, cy, QUESTION_LH, '#584f43');
+    cy += questionLines.length * QUESTION_LH + 28;
+
+    // Thin divider after question
+    ctx.strokeStyle = 'rgba(168,152,128,0.22)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(W / 2 - 60, cy); ctx.lineTo(W / 2 + 60, cy);
+    ctx.stroke();
+    cy += 20;
+  }
+
   // Kardashian label
   ctx.font = '300 10px sans-serif';
-  ctx.fillStyle = 'rgba(138,126,112,0.65)';
+  ctx.fillStyle = 'rgba(107,95,82,0.65)';
   ctx.fillText('K A R D A S H I A N   W I S D O M', W / 2, cy);
   cy += 36;
 
@@ -622,7 +650,7 @@ function drawShareCanvas(result) {
 
   // Philosopher label
   ctx.font = '300 10px sans-serif';
-  ctx.fillStyle = 'rgba(138,126,112,0.65)';
+  ctx.fillStyle = 'rgba(107,95,82,0.65)';
   ctx.fillText('P H I L O S O P H E R   E C H O', W / 2, cy);
   cy += 30;
 
@@ -639,7 +667,7 @@ function drawShareCanvas(result) {
   // Source
   if (result.source) {
     ctx.font = '300 10px sans-serif';
-    ctx.fillStyle = '#8a7e70';
+    ctx.fillStyle = '#6b5f52';
     ctx.fillText(result.source, W / 2, cy);
   }
 
@@ -682,7 +710,16 @@ function downloadBlob(blob) {
 
 async function handleShareText() {
   if (!currentResult) return;
-  const text = `"${currentResult.pseudo}"\n\n— ${currentResult.philosopher}${currentResult.source ? ', ' + currentResult.source : ''}`;
+  const questionLine = currentResult.question ? `"${currentResult.question}"\n\n` : '';
+  const sourceLine = currentResult.source ? `, ${currentResult.source}` : '';
+  const text = [
+    questionLine + '— Kardashian Wisdom —',
+    `"${currentResult.pseudo}"`,
+    '',
+    '— Philosopher Echo —',
+    `"${currentResult.excerpt}"`,
+    `— ${currentResult.philosopher}${sourceLine}`,
+  ].join('\n');
   const originalHTML = shareTextBtn.innerHTML;
 
   try {
