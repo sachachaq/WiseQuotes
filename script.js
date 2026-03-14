@@ -9,7 +9,6 @@ let philosophyData = null;
 let currentResult = null;
 let currentMood   = null;
 let moodDebounce  = null;
-let flutterTimer  = null;
 
 const recentPhilosopherIds = [];
 const RECENT_WINDOW = 7; // won't repeat same philosopher within last 7 picks
@@ -17,15 +16,9 @@ const RECENT_WINDOW = 7; // won't repeat same philosopher within last 7 picks
 /* ---------- DOM refs ---------- */
 const questionInput        = document.getElementById('user-question');
 const charCount            = document.getElementById('char-count');
-const vibeSlider           = document.getElementById('vibe-slider');
-const vibeControl          = document.getElementById('vibe-control');
-const sliderFill           = document.getElementById('slider-fill');
-const vibeBird             = document.getElementById('vibe-bird');
 const askBtn               = document.getElementById('ask-btn');
 const responseSection      = document.getElementById('response-section');
 const responseCard         = document.getElementById('response-card');
-const responseQuestionBlock= document.getElementById('response-question-block');
-const responseQuestionText = document.getElementById('response-question-text');
 const pseudoQuoteText      = document.getElementById('pseudo-quote-text');
 const philosopherExcerpt   = document.getElementById('philosopher-excerpt');
 const philosopherName      = document.getElementById('philosopher-name');
@@ -127,41 +120,21 @@ function extractTopic(text) {
   return words[0];
 }
 
-function generateDeepity(mode) {
+const ALL_DEEPITY_TEMPLATES = [
+  ...REFLECTIVE_TEMPLATES,
+  ...DEEPITY_TEMPLATES,
+  ...EXTREME_DEEPITY_TEMPLATES,
+];
+
+function generateBlendedDeepity() {
   const topic = extractTopic(questionInput.value.trim());
-  if (mode === 'balanced') {
-    if (topic) return rand(REFLECTIVE_TEMPLATES)(topic);
-    return rand(philosophyData.pseudoProfoundTemplates.balanced);
-  }
-  if (mode === 'extreme') {
-    if (topic) return rand(EXTREME_DEEPITY_TEMPLATES)(topic);
-    return rand(philosophyData.pseudoProfoundTemplates.extreme);
-  }
-  // kardashian (middle)
-  if (topic) return rand(DEEPITY_TEMPLATES)(topic);
-  return rand(philosophyData.pseudoProfoundTemplates.kardashian);
-}
-
-function getVibeKey(value) {
-  if (value < 34)  return 'balanced';
-  if (value < 67)  return 'kardashian';
-  return 'extreme';
-}
-
-function getVibeLabel(value) {
-  if (value < 34)  return 'Balanced';
-  if (value < 67)  return 'Kardashian';
-  return 'Absurd';
-}
-
-function updateSliderUI(value) {
-  sliderFill.style.width = value + '%';
-  updateBird(value);
-}
-
-function updateBird(value) {
-  if (!vibeBird) return;
-  vibeBird.style.left = value + '%';
+  if (topic) return rand(ALL_DEEPITY_TEMPLATES)(topic);
+  const fallback = [
+    ...philosophyData.pseudoProfoundTemplates.balanced,
+    ...philosophyData.pseudoProfoundTemplates.kardashian,
+    ...philosophyData.pseudoProfoundTemplates.extreme,
+  ];
+  return rand(fallback);
 }
 
 function weightedRand(pool, scoreFn = p => p.weight ?? 1) {
@@ -226,14 +199,11 @@ function pickExcerpt(excerpts, keywords) {
   });
 }
 
-function pick(excluding = null) {
-  const vibeKey  = getVibeKey(parseInt(vibeSlider.value, 10));
+function pick() {
   const philosophers = philosophyData.philosophers;
   const keywords = extractInputKeywords(questionInput.value.trim());
 
-  // Pick a pseudo-quote
-  let pseudo;
-  pseudo = generateDeepity(vibeKey);
+  const pseudo = generateBlendedDeepity();
 
   // Pick philosopher weighted by thematic relevance to user input
   const philosopher = pickPhilosopher(philosophers, keywords);
@@ -246,7 +216,6 @@ function pick(excluding = null) {
     philosopher: philosopher.name,
     excerpt: excerptObj.text,
     source: excerptObj.source,
-    vibe: getVibeLabel(parseInt(vibeSlider.value, 10))
   };
 }
 
@@ -369,13 +338,12 @@ function animateWords(element, text, delayStart = 0) {
   });
 }
 
-const pseudoQuoteEl = document.getElementById('pseudo-quote');
+const pseudoQuoteEl   = document.getElementById('pseudo-quote');
+const cardShare       = document.getElementById('card-share');
+const shareImageBtn   = document.getElementById('share-image-btn');
+const shareTextBtn    = document.getElementById('share-text-btn');
 
-function revealResponse(result, question) {
-  // Populate question echo
-  responseQuestionText.textContent = question || '';
-  responseQuestionBlock.hidden = !question;
-
+function revealResponse(result) {
   // Reset dramatic classes
   pseudoQuoteEl.classList.remove('revealing');
   responseCard.classList.remove('pop');
@@ -440,6 +408,10 @@ function revealResponse(result, question) {
   setTimeout(() => philosopherName.classList.add('visible'),    quoteFinishDelay + 300);
   setTimeout(() => philosopherSource.classList.add('visible'),  quoteFinishDelay + 450);
 
+  // ── Share section (fade in after philosopher reveal) ──────
+  cardShare.classList.remove('visible');
+  setTimeout(() => cardShare.classList.add('visible'), quoteFinishDelay + 600);
+
   // Scroll card into view gently
   setTimeout(() => {
     responseSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -471,7 +443,7 @@ async function handleAsk() {
     // Apply mood background before reveal
     applyMood(detectEmotion(question));
 
-    currentResult = pick(currentResult);
+    currentResult = pick();
 
     // Reset card state before re-animating
     responseCard.classList.remove('revealed');
@@ -479,7 +451,7 @@ async function handleAsk() {
     // Small delay so removal of .revealed doesn't cancel the new transition
     await new Promise(r => setTimeout(r, 30));
 
-    revealResponse(currentResult, question);
+    revealResponse(currentResult);
 
   } catch (err) {
     console.error('WiseQuotes error:', err);
@@ -489,6 +461,201 @@ async function handleAsk() {
     askBtn.querySelector('.ask-btn-inner').innerHTML =
       '<span class="ask-icon" aria-hidden="true">✦</span> Ask the Universe';
   }
+}
+
+/* ---------- Share helpers ---------- */
+
+function wrapTextLines(ctx, font, text, maxWidth) {
+  ctx.font = font;
+  const words = text.split(' ');
+  let line = '';
+  const lines = [];
+  for (const word of words) {
+    const test = line ? line + ' ' + word : word;
+    if (ctx.measureText(test).width > maxWidth && line) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = test;
+    }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+function drawWrappedText(ctx, font, lines, x, y, lineHeight, fillStyle) {
+  ctx.font = font;
+  ctx.fillStyle = fillStyle;
+  lines.forEach((line, i) => ctx.fillText(line, x, y + i * lineHeight));
+}
+
+function drawShareCanvas(result) {
+  const W = 880, PAD = 72, INNER = W - PAD * 2;
+  const QUOTE_FONT   = 'italic 300 24px Georgia, serif';
+  const EXCERPT_FONT = 'italic 300 16px Georgia, serif';
+  const QUOTE_LH = 38, EXCERPT_LH = 28;
+
+  // Measure pass (no drawing)
+  const tmp = document.createElement('canvas');
+  tmp.width = W; tmp.height = 10;
+  const tctx = tmp.getContext('2d');
+  tctx.textAlign = 'center';
+  const quoteLines   = wrapTextLines(tctx, QUOTE_FONT,   result.pseudo,   INNER - 20);
+  const excerptLines = wrapTextLines(tctx, EXCERPT_FONT, result.excerpt,  INNER);
+
+  const H = (
+    184
+    + quoteLines.length   * QUOTE_LH
+    + 85  // close-quote + divider + philosopher label + gaps
+    + excerptLines.length * EXCERPT_LH
+    + 22  // name
+    + (result.source ? 26 : 0)
+    + 56  // bottom padding
+  );
+
+  const canvas = document.createElement('canvas');
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  ctx.textAlign = 'center';
+
+  // Background
+  ctx.fillStyle = '#f7f3ec';
+  ctx.fillRect(0, 0, W, H);
+
+  // Border
+  ctx.strokeStyle = 'rgba(168,152,128,0.28)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(24, 24, W - 48, H - 48);
+
+  let cy = 72;
+
+  // Glyph
+  ctx.font = 'bold 22px serif';
+  ctx.fillStyle = '#b08a48';
+  ctx.fillText('✦', W / 2, cy);
+  cy += 40;
+
+  // Site name
+  ctx.font = '300 11px sans-serif';
+  ctx.fillStyle = '#8a7e70';
+  ctx.fillText('V E R Y   W I S E   Q U O T E S', W / 2, cy);
+  cy += 36;
+
+  // Kardashian label
+  ctx.font = '300 10px sans-serif';
+  ctx.fillStyle = 'rgba(138,126,112,0.65)';
+  ctx.fillText('K A R D A S H I A N   W I S D O M', W / 2, cy);
+  cy += 36;
+
+  // Open quote mark
+  ctx.save();
+  ctx.textAlign = 'left';
+  ctx.font = 'italic 52px Georgia, serif';
+  ctx.fillStyle = 'rgba(168,152,128,0.35)';
+  ctx.fillText('\u201c', PAD - 14, cy + 14);
+  ctx.restore();
+
+  // Quote text
+  drawWrappedText(ctx, QUOTE_FONT, quoteLines, W / 2, cy, QUOTE_LH, '#2d2820');
+  cy += quoteLines.length * QUOTE_LH;
+
+  // Close quote mark
+  ctx.save();
+  ctx.textAlign = 'right';
+  ctx.font = 'italic 52px Georgia, serif';
+  ctx.fillStyle = 'rgba(168,152,128,0.35)';
+  ctx.fillText('\u201d', W - PAD + 14, cy);
+  ctx.restore();
+  cy += 30;
+
+  // Divider
+  ctx.strokeStyle = 'rgba(168,152,128,0.3)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(W / 2 - 90, cy); ctx.lineTo(W / 2 + 90, cy);
+  ctx.stroke();
+  cy += 25;
+
+  // Philosopher label
+  ctx.font = '300 10px sans-serif';
+  ctx.fillStyle = 'rgba(138,126,112,0.65)';
+  ctx.fillText('P H I L O S O P H E R   E C H O', W / 2, cy);
+  cy += 30;
+
+  // Excerpt
+  drawWrappedText(ctx, EXCERPT_FONT, excerptLines, W / 2, cy, EXCERPT_LH, '#584f43');
+  cy += excerptLines.length * EXCERPT_LH + 20;
+
+  // Philosopher name
+  ctx.font = '600 14px Georgia, serif';
+  ctx.fillStyle = '#b08a48';
+  ctx.fillText(result.philosopher, W / 2, cy);
+  cy += 22;
+
+  // Source
+  if (result.source) {
+    ctx.font = '300 10px sans-serif';
+    ctx.fillStyle = '#8a7e70';
+    ctx.fillText(result.source, W / 2, cy);
+  }
+
+  return canvas;
+}
+
+async function handleShareImage() {
+  if (!currentResult) return;
+  const originalHTML = shareImageBtn.innerHTML;
+  shareImageBtn.disabled = true;
+  shareImageBtn.textContent = '…';
+
+  try {
+    const canvas = drawShareCanvas(currentResult);
+    await new Promise(resolve => {
+      canvas.toBlob(async blob => {
+        const file = new File([blob], 'wisequotes.png', { type: 'image/png' });
+        if (typeof navigator.canShare === 'function' && navigator.canShare({ files: [file] })) {
+          try { await navigator.share({ files: [file], title: 'Very Wise Quotes' }); }
+          catch (e) { if (e.name !== 'AbortError') downloadBlob(blob); }
+        } else {
+          downloadBlob(blob);
+        }
+        resolve();
+      }, 'image/png');
+    });
+  } finally {
+    shareImageBtn.innerHTML = originalHTML;
+    shareImageBtn.disabled = false;
+  }
+}
+
+function downloadBlob(blob) {
+  const a = document.createElement('a');
+  a.download = 'wisequotes.png';
+  a.href = URL.createObjectURL(blob);
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+}
+
+async function handleShareText() {
+  if (!currentResult) return;
+  const text = `"${currentResult.pseudo}"\n\n— ${currentResult.philosopher}${currentResult.source ? ', ' + currentResult.source : ''}`;
+  const originalHTML = shareTextBtn.innerHTML;
+
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none;top:0;left:0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch {}
+    document.body.removeChild(ta);
+  }
+
+  shareTextBtn.textContent = 'Copied ✓';
+  shareTextBtn.disabled = true;
+  setTimeout(() => { shareTextBtn.innerHTML = originalHTML; shareTextBtn.disabled = false; }, 2200);
 }
 
 /* ---------- Event listeners ---------- */
@@ -502,11 +669,6 @@ questionInput.addEventListener('input', () => {
   }, 500);
 });
 
-// Slider UI
-vibeSlider.addEventListener('input', () => {
-  updateSliderUI(parseInt(vibeSlider.value, 10));
-});
-
 // Enter key in textarea
 questionInput.addEventListener('keydown', e => {
   if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
@@ -518,9 +680,11 @@ questionInput.addEventListener('keydown', e => {
 // Ask button
 askBtn.addEventListener('click', handleAsk);
 
-/* ---------- Init ---------- */
+// Share buttons
+shareImageBtn.addEventListener('click', handleShareImage);
+shareTextBtn.addEventListener('click', handleShareText);
 
-updateSliderUI(50);
+/* ---------- Init ---------- */
 
 // Pre-load data silently so first ask is faster
 loadData().catch(() => {});

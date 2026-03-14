@@ -29,10 +29,15 @@
     <!-- Header -->
     <header class="site-header">
       <div class="logo-glyph" aria-hidden="true">✦</div>
-      <h1 class="site-title">WiseQuotes</h1>
+      <h1 class="site-title">Very Wise Quotes</h1>
       <p class="site-subtitle">Two friends, Chippy &amp; Coon bravely thinking thoughts</p>
-      <p class="site-tagline">The universe has been waiting to answer you.</p>
     </header>
+
+    <!-- Tagline block — sits just above the input -->
+    <div class="tagline-block">
+      <p class="site-tagline">The universe has been waiting to enlighten you.</p>
+      <p class="site-tagline-sub">inspired by the Kardashians</p>
+    </div>
 
     <!-- Input section -->
     <section class="ask-section" aria-label="Ask a question">
@@ -46,31 +51,6 @@
           aria-label="Your question"
         ></textarea>
         <span class="char-count" id="char-count">0 / 280</span>
-      </div>
-
-      <!-- Vibe slider -->
-      <div class="vibe-control" id="vibe-control" data-mode="balanced" role="group" aria-label="Answer vibe">
-        <span class="vibe-label vibe-left">Balanced</span>
-        <div class="slider-track" id="slider-track-el">
-          <input
-            type="range"
-            id="vibe-slider"
-            class="vibe-slider"
-            min="0"
-            max="100"
-            value="50"
-            aria-label="Vibe level: 0 = Balanced, 50 = Kardashian, 100 = Absurd"
-          />
-          <div class="slider-fill" id="slider-fill"></div>
-          <!-- Bird marker -->
-          <div class="vibe-bird" id="vibe-bird" aria-hidden="true">
-            <svg class="bird-svg" viewBox="0 0 36 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 1 11 C 5 5 9 2 16 6 Q 18 8 20 6 C 27 2 31 5 35 11"
-                    stroke="#9a8c72" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </div>
-        <span class="vibe-label vibe-right">Absurd</span>
       </div>
 
       <div class="ask-row">
@@ -89,15 +69,8 @@
 
       <div class="response-card" id="response-card">
 
-        <!-- User question echo -->
-        <div class="response-question" id="response-question-block">
-          <span class="response-question-label">You asked:</span>
-          <p class="response-question-text" id="response-question-text"></p>
-        </div>
-
-        <div class="divider-glyph" aria-hidden="true">· · ✦ · ·</div>
-
-        <!-- Pseudo-profound quote -->
+        <!-- Kardashian Wisdom -->
+        <p class="response-section-label">Kardashian Wisdom</p>
         <blockquote class="pseudo-quote" id="pseudo-quote">
           <span class="quote-mark open-quote" aria-hidden="true">"</span>
           <span class="pseudo-quote-text" id="pseudo-quote-text"></span>
@@ -106,7 +79,8 @@
 
         <div class="divider-line" aria-hidden="true"></div>
 
-        <!-- Philosopher excerpt -->
+        <!-- Philosopher Echo -->
+        <p class="response-section-label">Philosopher Echo</p>
         <div class="philosopher-block">
           <blockquote class="philosopher-quote" id="philosopher-quote">
             <p class="philosopher-excerpt" id="philosopher-excerpt"></p>
@@ -117,6 +91,21 @@
               <span class="philosopher-source" id="philosopher-source"></span>
             </cite>
           </footer>
+        </div>
+
+        <!-- Share section -->
+        <div class="card-share" id="card-share">
+          <p class="card-share-microcopy">Send this little truth to your trusted confidant.</p>
+          <div class="card-share-actions">
+            <button class="card-share-btn" id="share-image-btn" type="button">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
+              Share as Image
+            </button>
+            <button class="card-share-btn" id="share-text-btn" type="button">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+              Share Text
+            </button>
+          </div>
         </div>
 
       </div>
