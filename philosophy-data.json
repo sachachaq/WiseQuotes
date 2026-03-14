@@ -676,19 +676,19 @@
     }
   ],
   "pseudoProfoundTemplates": {
-    "serious": [
-      "The river does not fight the stone. The river becomes the stone's biography.",
-      "To seek the answer is already to have found the question. To find the question is to have misplaced your keys.",
-      "Silence speaks loudest in rooms where no one has listened.",
-      "The shadow you cast at noon is the you that noon refuses to acknowledge.",
-      "Every closed door is simply a wall that learned ambition.",
-      "The wound is not where the arrow landed, but where you were standing when it did.",
-      "We do not inherit the stars. We borrow them, briefly, and call it home.",
-      "What you resist does not persist — it simply waits in a different corridor of the self.",
-      "The tree does not apologize for the autumn. Neither should you.",
-      "To be lost is simply to be very, very present in a place no map has visited yet."
-    ],
     "balanced": [
+      "The answer keeps asking you the same question.",
+      "You arrived here by taking every available detour.",
+      "The thing you weren't looking for is the thing you keep finding.",
+      "You already knew before you asked. That's why you asked.",
+      "Every arrival turns out to be just another place to leave from.",
+      "The clearer the question gets, the further the answer moves.",
+      "You've been here before, in a slightly different here.",
+      "Understanding something fully is a reliable way to misunderstand it.",
+      "It all adds up, if you're comfortable with the total being unclear.",
+      "The universe got your message. It just reads differently on its end."
+    ],
+    "kardashian": [
       "The universe noticed your question and immediately scheduled a meeting with itself.",
       "Growth is just confusion that decided to stay for breakfast.",
       "You are both the gardener and the somewhat stubborn weed. Negotiations are ongoing.",
@@ -700,7 +700,7 @@
       "Progress is just past mistakes wearing better shoes.",
       "You already know what to do. You're just hoping the universe will do it for you. Relatable."
     ],
-    "kardashian": [
+    "extreme": [
       "The road you take is the road you're on.",
       "When you have unanswered questions, you're someone who's questioning.",
       "At the end of the day, the day has ended. And you were in it.",
@@ -715,12 +715,12 @@
       "Everything you've been through has brought you to everything you've been through.",
       "When something ends, it's over. Which, honestly, can feel like an ending.",
       "Your truth is yours. That's what makes it not someone else's.",
-      "The direction you're heading is where you're going. You just have to keep going in that direction.",
       "I've realized that the things I don't understand are the things I haven't understood yet. And that's actually really deep.",
       "What you feel is a feeling you're having. And feelings are real because you're feeling them.",
       "The version of you that exists right now is the you that exists at this moment in time.",
       "When time passes, what was happening stops happening. And then something else starts happening, or nothing does.",
-      "We all have a story. And that story is really just everything that's happened to us, told in order."
+      "We all have a story. And that story is really just everything that's happened to us, told in order.",
+      "The direction you're heading is where you're going. You just have to keep going in that direction."
     ]
   }
 }

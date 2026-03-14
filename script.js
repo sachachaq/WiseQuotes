@@ -81,6 +81,40 @@ const DEEPITY_TEMPLATES = [
   t => `At the end of the day, ${t} is at the end of the day. And that's where ${t} lives.`,
 ];
 
+const REFLECTIVE_TEMPLATES = [
+  t => `Strange, how ${t} keeps arriving exactly where it started.`,
+  t => `The ${t} you're describing sounds a lot like more ${t}.`,
+  t => `Funny — ${t} tends to show up right when you're already dealing with ${t}.`,
+  t => `The ${t} question is really just a ${t}-shaped answer in disguise.`,
+  t => `There's something about ${t} that only makes sense while you're still inside it.`,
+  t => `${cap(t)} always arrives carrying more ${t}.`,
+  t => `You're not confused about ${t}. You understand it perfectly. That's the problem.`,
+  t => `The ${t} was already there before you noticed it. That's what ${t} does.`,
+  t => `Looking for a way out of ${t} is its own kind of ${t}.`,
+  t => `${cap(t)} is exactly as complicated as the time you've spent thinking about ${t}.`,
+  t => `You already know what the ${t} is doing. The ${t} knows too.`,
+  t => `The answer to ${t} keeps asking you the same question back.`,
+];
+
+const EXTREME_DEEPITY_TEMPLATES = [
+  t => `${cap(t)} is, was, and will be ${t}. That's the entire timeline of ${t}.`,
+  t => `The ${t} journey begins with ${t}, continues through ${t}, and ultimately arrives at more ${t}.`,
+  t => `Some people experience ${t}. Others experience it differently. But all of them are experiencing their version of ${t}, which is ${t}.`,
+  t => `${cap(t)} comes for everyone. Even people who don't have ${t} are just people who haven't had their ${t} yet.`,
+  t => `I looked into ${t}, and what I found was: ${t} was already there, looking back.`,
+  t => `${cap(t)} is just ${t} with the volume turned all the way up. And honestly? That's a lot of ${t}.`,
+  t => `The universe sent me ${t} so I could understand ${t}. And now that I understand ${t}, I understand why the universe sent me ${t}.`,
+  t => `Before ${t}, there was no ${t}. After ${t}, there is just the memory of ${t}. During ${t}, there is only ${t}.`,
+  t => `${cap(t)} asked me what it was. I told it: you are ${t}. And then ${t} understood itself.`,
+  t => `Some say ${t} changes you. I say you change, and call it ${t}. Either way, ${t}.`,
+  t => `The hardest part of ${t} is that it's not the easy part. The easy part is after all the hard parts of ${t}.`,
+  t => `${cap(t)} lives inside ${t}. Inside that ${t} is more ${t}. It's ${t} all the way down, babe.`,
+  t => `What is ${t}? At its core, ${t} is the most ${t} thing about ${t}. I stand by this.`,
+  t => `They say you can't rush ${t}. But also, if you wait too long, ${t} has already happened without you. So: medium speed on the ${t}.`,
+  t => `You + ${t} = someone who is you, with ${t}. And that math? That math is real.`,
+  t => `${cap(t)} is what happens when ${t} meets more ${t} under the right conditions. Which is any conditions, because ${t}.`,
+];
+
 function extractTopic(text) {
   if (!text || text.trim().length < 3) return null;
   const words = text.toLowerCase()
@@ -93,22 +127,31 @@ function extractTopic(text) {
   return words[0];
 }
 
-function generateKardashianDeepity() {
+function generateDeepity(mode) {
   const topic = extractTopic(questionInput.value.trim());
+  if (mode === 'balanced') {
+    if (topic) return rand(REFLECTIVE_TEMPLATES)(topic);
+    return rand(philosophyData.pseudoProfoundTemplates.balanced);
+  }
+  if (mode === 'extreme') {
+    if (topic) return rand(EXTREME_DEEPITY_TEMPLATES)(topic);
+    return rand(philosophyData.pseudoProfoundTemplates.extreme);
+  }
+  // kardashian (middle)
   if (topic) return rand(DEEPITY_TEMPLATES)(topic);
   return rand(philosophyData.pseudoProfoundTemplates.kardashian);
 }
 
 function getVibeKey(value) {
-  if (value < 34)  return 'serious';
-  if (value < 67)  return 'balanced';
-  return 'kardashian';
+  if (value < 34)  return 'balanced';
+  if (value < 67)  return 'kardashian';
+  return 'extreme';
 }
 
 function getVibeLabel(value) {
-  if (value < 34)  return 'Serious';
-  if (value < 67)  return 'Balanced';
-  return 'Kardashian';
+  if (value < 34)  return 'Balanced';
+  if (value < 67)  return 'Kardashian';
+  return 'Absurd';
 }
 
 function updateSliderUI(value) {
@@ -190,15 +233,7 @@ function pick(excluding = null) {
 
   // Pick a pseudo-quote
   let pseudo;
-  if (vibeKey === 'kardashian') {
-    // Dynamically generated from user input
-    pseudo = generateKardashianDeepity();
-  } else {
-    const quotes = philosophyData.pseudoProfoundTemplates[vibeKey];
-    let pseudoList = excluding ? quotes.filter(q => q !== excluding.pseudo) : quotes;
-    if (!pseudoList.length) pseudoList = quotes;
-    pseudo = rand(pseudoList);
-  }
+  pseudo = generateDeepity(vibeKey);
 
   // Pick philosopher weighted by thematic relevance to user input
   const philosopher = pickPhilosopher(philosophers, keywords);
