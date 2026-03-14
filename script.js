@@ -117,16 +117,32 @@ const TEMPORAL_TRUTH_TEMPLATES = [
   t => `${cap(t)} began when it started, and ends when there's no more of it.`,
 ];
 
-function extractTopic(text) {
-  if (!text || text.trim().length < 3) return null;
+// Nouns/emotions/concepts that carry strong meaning — bump their priority
+const MEANINGFUL_WORD_HINTS = new Set([
+  'anxiety','grief','loss','fear','anger','pain','hope','love','joy','peace',
+  'guilt','shame','doubt','trust','change','growth','death','life','time',
+  'money','work','stress','weather','health','family','friend','future','past',
+  'failure','success','purpose','meaning','identity','freedom','control','power',
+  'beauty','truth','faith','mind','body','soul','heart','dream','goal','choice',
+]);
+
+function extractTopics(text) {
+  if (!text || text.trim().length < 3) return [];
   const words = text.toLowerCase()
     .replace(/[^a-z\s]/g, ' ')
     .split(/\s+/)
     .filter(w => w.length >= 4 && !DEEPITY_STOP_WORDS.has(w));
-  if (!words.length) return null;
-  // Prefer longer, more specific words
-  words.sort((a, b) => b.length - a.length);
-  return words[0];
+  if (!words.length) return [];
+
+  // Score: known meaningful words score 3, longer words score their length
+  words.sort((a, b) => {
+    const scoreA = (MEANINGFUL_WORD_HINTS.has(a) ? 3 : 0) + a.length * 0.1;
+    const scoreB = (MEANINGFUL_WORD_HINTS.has(b) ? 3 : 0) + b.length * 0.1;
+    return scoreB - scoreA;
+  });
+
+  // Return up to 3 top candidates (deduplicated)
+  return [...new Set(words)].slice(0, 3);
 }
 
 const ALL_DEEPITY_TEMPLATES = [
@@ -137,8 +153,11 @@ const ALL_DEEPITY_TEMPLATES = [
 ];
 
 function generateBlendedDeepity() {
-  const topic = extractTopic(questionInput.value.trim());
-  if (topic) return rand(ALL_DEEPITY_TEMPLATES)(topic);
+  const topics = extractTopics(questionInput.value.trim());
+  if (topics.length) {
+    const topic = rand(topics); // pick randomly from top 2–3 meaningful words
+    return rand(ALL_DEEPITY_TEMPLATES)(topic);
+  }
   const fallback = [
     ...philosophyData.pseudoProfoundTemplates.balanced,
     ...philosophyData.pseudoProfoundTemplates.kardashian,
