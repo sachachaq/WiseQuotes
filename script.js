@@ -505,6 +505,8 @@ function animateWords(element, text, delayStart = 0) {
 }
 
 const pseudoQuoteEl   = document.getElementById('pseudo-quote');
+const userThought     = document.getElementById('user-thought');
+const userThoughtText = document.getElementById('user-thought-text');
 const cardShare       = document.getElementById('card-share');
 const shareImageBtn   = document.getElementById('share-image-btn');
 const shareTextBtn    = document.getElementById('share-text-btn');
@@ -513,6 +515,14 @@ function revealResponse(result) {
   // Reset dramatic classes
   pseudoQuoteEl.classList.remove('revealing');
   responseCard.classList.remove('pop');
+
+  // Populate user's original thought
+  if (result.question) {
+    userThoughtText.textContent = result.question;
+    userThought.hidden = false;
+  } else {
+    userThought.hidden = true;
+  }
 
   // Animate pseudo-quote word by word
   animateWords(pseudoQuoteText, result.pseudo, 0);

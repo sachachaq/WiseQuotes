@@ -506,6 +506,20 @@ body.mood-joy .bg-nature::before {
   margin: 1rem 0;
 }
 
+/* User's original thought */
+.user-thought {
+  margin-bottom: .25rem;
+}
+
+.user-thought-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
 /* Section labels */
 .response-section-label {
   font-size: .75rem;
