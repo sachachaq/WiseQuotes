@@ -330,12 +330,33 @@ function extractTopics(text) {
   return [...new Set(words)].slice(0, 3);
 }
 
+// Each template is tagged with its structure so philosopher selection
+// can be steered toward the same conceptual territory.
 const ALL_DEEPITY_TEMPLATES = [
-  ...IDENTITY_LOOP_TEMPLATES,
-  ...CONDITIONAL_DEEPITY_TEMPLATES,
-  ...PERSPECTIVE_LOOP_TEMPLATES,
-  ...TEMPORAL_TRUTH_TEMPLATES,
+  ...IDENTITY_LOOP_TEMPLATES.map(fn   => ({ fn, structure: 'identity-loop'       })),
+  ...CONDITIONAL_DEEPITY_TEMPLATES.map(fn => ({ fn, structure: 'conditional-deepity' })),
+  ...PERSPECTIVE_LOOP_TEMPLATES.map(fn => ({ fn, structure: 'perspective-loop'    })),
+  ...TEMPORAL_TRUTH_TEMPLATES.map(fn  => ({ fn, structure: 'temporal-truth'       })),
 ];
+
+// ── Structure → philosopher theme keywords ────────────────
+// These are injected into philosopher scoring so the philosopher
+// echoes the same conceptual territory as the deepity structure.
+//
+//  Identity Loop       → self / existence / authenticity
+//  Conditional Deepity → truth / reason / logic / certainty
+//  Perspective Loop    → learning / growth / wisdom / understanding
+//  Temporal Truth      → time / impermanence / the present moment
+const STRUCTURE_THEMES = {
+  'identity-loop':       ['identity','self','being','exist','authentic','belong',
+                          'define','choice','own','become','real','who'],
+  'conditional-deepity': ['truth','reason','exist','certainty','doubt','clarity',
+                          'logic','reality','knowledge','method','think'],
+  'perspective-loop':    ['learn','knowledge','understand','wisdom','growth','change',
+                          'progress','experience','habit','examine','education'],
+  'temporal-truth':      ['time','present','live','moment','change','flow','past',
+                          'future','patience','hurry','slow','day','wasted'],
+};
 
 // Track recently used template indices — avoid repeating within last 20 picks
 const recentTemplateIndices = [];
@@ -344,33 +365,33 @@ const TEMPLATE_RECENT_WINDOW = 20;
 function pickDeepityTemplate() {
   const recentSet = new Set(recentTemplateIndices);
   const candidates = ALL_DEEPITY_TEMPLATES
-    .map((fn, i) => ({ fn, i }))
+    .map((entry, i) => ({ ...entry, i }))
     .filter(({ i }) => !recentSet.has(i));
 
   // Fall back to full pool only if fresh pool is very small
-  const pool = candidates.length >= 10 ? candidates : ALL_DEEPITY_TEMPLATES.map((fn, i) => ({ fn, i }));
-  const { fn, i } = rand(pool);
+  const pool = candidates.length >= 10 ? candidates : ALL_DEEPITY_TEMPLATES.map((entry, i) => ({ ...entry, i }));
+  const chosen = rand(pool);
 
-  recentTemplateIndices.push(i);
+  recentTemplateIndices.push(chosen.i);
   if (recentTemplateIndices.length > TEMPLATE_RECENT_WINDOW) recentTemplateIndices.shift();
 
-  return fn;
+  return { fn: chosen.fn, structure: chosen.structure };
 }
 
 function generateBlendedDeepity() {
-  const templateFn = pickDeepityTemplate();
+  const { fn: templateFn, structure } = pickDeepityTemplate();
   const topics = extractTopics(questionInput.value.trim());
   if (topics.length) {
     const topic = rand(topics);
     const synonym = getSynonym(topic);
-    return templateFn(topic, synonym);
+    return { text: templateFn(topic, synonym), structure };
   }
   const fallback = [
     ...philosophyData.pseudoProfoundTemplates.balanced,
     ...philosophyData.pseudoProfoundTemplates.kardashian,
     ...philosophyData.pseudoProfoundTemplates.extreme,
   ];
-  return rand(fallback);
+  return { text: rand(fallback), structure };
 }
 
 function weightedRand(pool, scoreFn = p => p.weight ?? 1) {
@@ -439,12 +460,16 @@ function pick() {
   const philosophers = philosophyData.philosophers;
   const inputKeywords = extractInputKeywords(questionInput.value.trim());
 
-  const pseudo = generateBlendedDeepity();
+  const { text: pseudo, structure } = generateBlendedDeepity();
 
-  // Combine user input keywords with keywords extracted from the deepity itself
-  // so the philosopher relates to the same idea the deepity expresses
-  const deepityKeywords = extractInputKeywords(pseudo);
-  const combinedKeywords = new Set([...inputKeywords, ...deepityKeywords]);
+  // Build combined keyword set:
+  //   • user input keywords  — what the person is thinking about
+  //   • structure keywords   — conceptual territory of the deepity structure
+  //                            (identity, time, learning, logic…)
+  //   • deepity text words   — topic noun used in the generated quote
+  const structureKeywords = STRUCTURE_THEMES[structure] ?? [];
+  const deepityKeywords   = extractInputKeywords(pseudo);
+  const combinedKeywords  = new Set([...inputKeywords, ...structureKeywords, ...deepityKeywords]);
 
   const philosopher = pickPhilosopher(philosophers, combinedKeywords);
   const excerptObj  = pickExcerpt(philosopher.excerpts, combinedKeywords);
