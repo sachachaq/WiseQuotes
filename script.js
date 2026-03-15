@@ -169,11 +169,11 @@ function getSynonym(topic) {
   return (syns && syns.length) ? rand(syns) : topic;
 }
 
-// ── Structure 1: Identity Loop ────────────────────────────
+// ── Structure 1: Identity Loop (27 templates) ─────────────
 // Pattern: subject = itself reframed.
 // "The road you take is the road you're on."
 // "A decision you make is a choice you chose."
-// t = topic noun; s = synonym (may equal t if no synonym exists)
+// t = topic noun; s = synonym (may equal t if no synonym available)
 const IDENTITY_LOOP_TEMPLATES = [
   (t, s) => `The ${t} you have is the ${s} that's yours.`,
   (t, s) => `The ${t} you carry is the ${s} that's with you.`,
@@ -185,12 +185,29 @@ const IDENTITY_LOOP_TEMPLATES = [
   (t, s) => `The ${t} you hold onto is the ${s} you haven't let go of.`,
   (t, s) => `A ${t} you walk into is a ${s} you're standing in.`,
   (t, s) => `The ${t} you moved past is the ${s} that's behind you now.`,
+  (t, s) => `The ${t} you arrived with is the ${s} you walked in carrying.`,
+  (t, s) => `Whatever ${t} you have is the ${s} that you've got.`,
+  (t, s) => `The ${t} you found is the ${s} you were looking for.`,
+  (t, s) => `A ${t} you've lived through is a ${s} you've been inside.`,
+  (t, s) => `The ${t} you're holding is the ${s} in your hands.`,
+  (t, s) => `Your ${t} today is the ${s} that belongs to right now.`,
+  (t, s) => `The ${t} you brought with you is the ${s} you didn't leave behind.`,
+  (t, s) => `The ${t} that's real is the ${s} that actually exists.`,
+  (t, s) => `The ${t} you named is the ${s} you gave a word to.`,
+  (t, s) => `The ${t} you've accepted is the ${s} you stopped fighting.`,
+  (t, s) => `The ${t} you returned to is the ${s} you came back to.`,
+  (t, s) => `The ${t} you live with is the ${s} that lives with you.`,
+  (t, s) => `The ${t} in your life is the ${s} your life has.`,
+  (t, s) => `The ${t} you keep is the ${s} you never put down.`,
+  (t, s) => `The ${t} you came from is the ${s} that was before you.`,
+  (t, s) => `A ${t} you step into is a ${s} you're now inside.`,
+  (t, s) => `The ${t} that shapes you is the ${s} doing the shaping.`,
 ];
 
-// ── Structure 2: Conditional Deepity ─────────────────────
+// ── Structure 2: Conditional Deepity (28 templates) ───────
 // Pattern: if X then X already is.
 // "If something happens, then it occurred."
-// Only t is used; s is accepted but ignored so the signature stays consistent.
+// All templates accept (t, s) for consistency; most only need t.
 const CONDITIONAL_DEEPITY_TEMPLATES = [
   (t) => `If ${t} is real, then it exists.`,
   (t) => `Once ${t} arrives, you're no longer without it.`,
@@ -202,12 +219,29 @@ const CONDITIONAL_DEEPITY_TEMPLATES = [
   (t) => `If ${t} touched you, the touching is done.`,
   (t) => `Once ${t} passes, the passing is behind you.`,
   (t) => `When ${t} is gone, it's no longer here.`,
+  (t) => `If ${t} found you, you've been found by it.`,
+  (t) => `Once ${t} exists, it is no longer absent.`,
+  (t) => `When ${t} takes hold, you're in its grip.`,
+  (t) => `If ${t} was real, it was real while it lasted.`,
+  (t) => `Once ${t} has started, it is no longer unstarted.`,
+  (t) => `If ${t} left a mark, the mark is already there.`,
+  (t) => `When ${t} shifts, something has shifted.`,
+  (t) => `Once ${t} is known, it can no longer be unknown.`,
+  (t) => `If ${t} moved you, you were moved.`,
+  (t) => `Once ${t} lands, it has arrived.`,
+  (t) => `If ${t} was felt, then there was feeling.`,
+  (t) => `When ${t} settles, it has come to rest.`,
+  (t) => `If ${t} returns, it has come back.`,
+  (t) => `Once ${t} matters, it has become something that matters.`,
+  (t) => `If ${t} was there, it was present.`,
+  (t) => `When ${t} hits you, you've been hit by it.`,
+  (t) => `If ${t} came first, it was there before what came after.`,
+  (t) => `Once ${t} is let in, you've already opened the door.`,
 ];
 
-// ── Structure 3: Perspective Loop ────────────────────────
+// ── Structure 3: Perspective Loop (27 templates) ──────────
 // Pattern: understanding something means you already changed by it.
 // "When you learn something new, you know more than before."
-// "When you look forward, you're looking ahead."
 const PERSPECTIVE_LOOP_TEMPLATES = [
   (t, s) => `When you find ${t}, you stop looking for it.`,
   (t, s) => `The more ${t} you understand, the less of it stays unknown.`,
@@ -219,12 +253,28 @@ const PERSPECTIVE_LOOP_TEMPLATES = [
   (t, s) => `The more ${t} you've had, the more ${s} you've been through.`,
   (t, s) => `When ${t} starts to make sense, it's already begun to.`,
   (t, s) => `Every time you move through ${t}, you become someone who did.`,
+  (t, s) => `The more you carry ${t}, the more ${s} you've been carrying.`,
+  (t, s) => `When you've sat with ${t}, you know what sitting with ${s} is like.`,
+  (t, s) => `The longer ${t} stays with you, the longer ${s} has been there.`,
+  (t, s) => `When you let go of ${t}, it's no longer something you're holding.`,
+  (t, s) => `The more you return to ${t}, the more times you've gone back to ${s}.`,
+  (t, s) => `When ${t} no longer surprises you, you've already been surprised by it.`,
+  (t, s) => `The more clearly you see ${t}, the less unclear it is.`,
+  (t, s) => `When you walk through ${t}, the walking is part of it.`,
+  (t, s) => `The more you've held ${t}, the longer ${s} has been in your hands.`,
+  (t, s) => `Once you've experienced ${t}, you have the experience of ${s}.`,
+  (t, s) => `When ${t} becomes familiar, the unfamiliarity is already gone.`,
+  (t, s) => `When you look at ${t} directly, you're no longer looking away.`,
+  (t, s) => `After enough ${t}, you know what too much ${s} feels like.`,
+  (t, s) => `Once ${t} teaches you something, you've learned it.`,
+  (t, s) => `The more you notice ${t}, the less you're missing it.`,
+  (t, s) => `When ${t} becomes clear, the confusion about it is already lifting.`,
+  (t, s) => `The further you go into ${t}, the less of it is still ahead of you.`,
 ];
 
-// ── Structure 4: Temporal Truth ───────────────────────────
+// ── Structure 4: Temporal Truth (24 templates) ────────────
 // Pattern: time passing simply means the moment moved forward.
 // "The future is what comes after now."
-// "When time passes, the moment moves on."
 const TEMPORAL_TRUTH_TEMPLATES = [
   (t, s) => `The ${t} ahead is what hasn't reached you yet.`,
   (t, s) => `${cap(t)} that already happened is ${s} that's in the past now.`,
@@ -236,6 +286,20 @@ const TEMPORAL_TRUTH_TEMPLATES = [
   (t, s) => `The ${t} you're waiting for hasn't come yet.`,
   (t, s) => `${cap(t)} begins when it starts, and ends when it's done.`,
   (t, s) => `Future ${t} is the ${s} that hasn't happened yet.`,
+  (t, s) => `The ${t} that's over has already ended.`,
+  (t, s) => `${cap(t)} from before is ${s} that's already in the past.`,
+  (t, s) => `The ${t} you remember is ${s} that already happened.`,
+  (t, s) => `The ${t} you're in now is the ${s} that's happening right now.`,
+  (t, s) => `Any ${t} that's passed is ${s} that went before this moment.`,
+  (t, s) => `The ${t} that was is the ${s} that no longer is.`,
+  (t, s) => `The ${t} coming toward you is the ${s} that isn't here yet.`,
+  (t, s) => `The ${t} you carried yesterday is the ${s} you had before today.`,
+  (t, s) => `${cap(t)} that moved on is ${s} that didn't stay.`,
+  (t, s) => `The ${t} that remains is the ${s} that hasn't left.`,
+  (t, s) => `${cap(t)} that ended is ${s} that no longer continues.`,
+  (t, s) => `The ${t} before now is the ${s} that already was.`,
+  (t, s) => `When ${t} finally comes, it will have arrived.`,
+  (t, s) => `The ${t} in the middle is the ${s} between the beginning and the end.`,
 ];
 
 // Nouns/emotions/concepts that carry strong meaning — bump their priority
@@ -273,12 +337,33 @@ const ALL_DEEPITY_TEMPLATES = [
   ...TEMPORAL_TRUTH_TEMPLATES,
 ];
 
+// Track recently used template indices — avoid repeating within last 20 picks
+const recentTemplateIndices = [];
+const TEMPLATE_RECENT_WINDOW = 20;
+
+function pickDeepityTemplate() {
+  const recentSet = new Set(recentTemplateIndices);
+  const candidates = ALL_DEEPITY_TEMPLATES
+    .map((fn, i) => ({ fn, i }))
+    .filter(({ i }) => !recentSet.has(i));
+
+  // Fall back to full pool only if fresh pool is very small
+  const pool = candidates.length >= 10 ? candidates : ALL_DEEPITY_TEMPLATES.map((fn, i) => ({ fn, i }));
+  const { fn, i } = rand(pool);
+
+  recentTemplateIndices.push(i);
+  if (recentTemplateIndices.length > TEMPLATE_RECENT_WINDOW) recentTemplateIndices.shift();
+
+  return fn;
+}
+
 function generateBlendedDeepity() {
+  const templateFn = pickDeepityTemplate();
   const topics = extractTopics(questionInput.value.trim());
   if (topics.length) {
     const topic = rand(topics);
     const synonym = getSynonym(topic);
-    return rand(ALL_DEEPITY_TEMPLATES)(topic, synonym);
+    return templateFn(topic, synonym);
   }
   const fallback = [
     ...philosophyData.pseudoProfoundTemplates.balanced,
